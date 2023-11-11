@@ -1,6 +1,6 @@
 function [output] = cpk(t)
 %CP Summary of this function goes here
-%   Detailed explanation goes here test
+%   Detailed explanation goes here testg
 if t >= pi/2 & t <= 3/2*pi
     t = pi/2;
 end
