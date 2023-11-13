@@ -48,5 +48,14 @@ clear
 close all
 
 
+vel = 1;
+alfa = deg2rad(10);
+raggio = 1;
+
+centro = [0.1, 0.1];
+
+
+
+
 
 
