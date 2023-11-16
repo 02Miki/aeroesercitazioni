@@ -80,11 +80,12 @@ W = @(z) (-vel*((z-zc)*exp(alfaImmaginario)+raggio^2./(z-zc).*exp(-alfaImmaginar
 
 tetaPrimo = linspace(0, 2*pi);
 
-z_cerchio = complex(centro(1), centro(2)) + raggio*exp(1i*tetaPrimo)
+z_cerchio = complex(centro(1), centro(2)) + raggio*exp(1i*tetaPrimo);
 hold on
 
-contour(X, Y, imag(W(complex(X,Y))), 31)
+contour(X, Y, imag(W(complex(X,Y))), 100)
 plot(real(z_cerchio), imag(z_cerchio), "LineWidth",5)
+axis equal
 
 
 figure
@@ -93,7 +94,7 @@ zita = z_cerchio+b^2./z_cerchio;
 z = complex(X,Y);
 plot(real(zita), imag(zita),"LineWidth", 3)
 zetaNew = z+b^2./z;
-contour(real(zetaNew), imag(zetaNew), imag(W(complex(X,Y))), 31)
+contour(real(zetaNew), imag(zetaNew), imag(W(complex(X,Y))), 100)
 axis equal
 
 
