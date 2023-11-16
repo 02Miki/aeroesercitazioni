@@ -4,7 +4,7 @@ clc
 clear
 close all
 
-[iaf, af] = def_airfoil('0015', 30)
+[iaf, af] = def_airfoil('0015', 4)
 
 
 x = flipud(af.x);
@@ -28,7 +28,8 @@ plot([pannelli.puntoControlloX], [pannelli.puntoControlloY], 'x')
 axis equal
 
 quiver([pannelli.puntoControlloX], [pannelli.puntoControlloY], -sin([pannelli.angolo]), cos([pannelli.angolo]))
-% quiver([pannelli.puntoControlloX], [pannelli.puntoControlloY], cos([pannelli.angolo]), sin([pannelli.angolo]))
+quiver([pannelli.puntoControlloX], [pannelli.puntoControlloY], cos([pannelli.angolo]), sin([pannelli.angolo]))
+
 
 
 

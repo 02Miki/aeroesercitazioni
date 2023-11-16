@@ -1,5 +1,5 @@
 
-
+close all
 %teta1 = linspace(-pi/2, pi/2);
 %teta2 = linspace(pi/2, 3/2*pi);
 

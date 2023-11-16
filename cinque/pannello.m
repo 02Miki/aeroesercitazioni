@@ -1,4 +1,4 @@
-classdef pannello
+classdef pannello < handle
     %PANNELLO Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -6,15 +6,19 @@ classdef pannello
         puntoControlloX
         puntoControlloY
         angolo
+        Rij
+        lunghezzaPannello
+        angoliBeta
     end
     
     methods
-        function obj = pannello(puntoControlloX, puntoControlloY, angolo)
+        function obj = pannello(puntoControlloX, puntoControlloY, angolo, lunghezzaPannello)
             %PANNELLO Construct an instance of this class
             %   Detailed explanation goes here
             obj.puntoControlloX = puntoControlloX;
             obj.puntoControlloY = puntoControlloY;
             obj.angolo = angolo;
+            obj.lunghezzaPannello = lunghezzaPannello;
 
         end
         
@@ -31,16 +35,37 @@ classdef pannello
                 xMedio = (x(xIndex) + x(xIndex+1))/2;
                 yMedio = (y(xIndex) + y(xIndex+1))/2;
 
-                deltaX = x(xIndex+1) - x(xIndex);
-                deltaY = y(xIndex+1) - y(xIndex);
+                deltaXCentro = x(xIndex+1) - x(xIndex);
+                deltaYCentro = y(xIndex+1) - y(xIndex);
 
                 % angolo = sign(deltaY).*atan2(abs(deltaY), abs(deltaX));
-                angolo = atan2(deltaY, deltaX);
+                angolo = atan2(deltaYCentro, deltaXCentro);
+                lunghezza =  sqrt(deltaXCentro^2 + deltaYCentro^2);
+                pan = pannello(xMedio, yMedio, angolo, lunghezza);
+                lista(xIndex) = pan;
 
+                % for indiceX = 1:size(x) - 1
+                for indiceX = 1:size(x)
+                    deltaX = xMedio - x(indiceX);
+                    deltaY = yMedio - y(indiceX);
 
-
-                lista(xIndex) = pannello(xMedio, yMedio, angolo);
+                    pan.Rij(indiceX) = sqrt(deltaX^2 + deltaY^2);
+                end
+    
             end
+%            genero angoli beta, ciclo sui pannelli
+            for indexPannello = 1:size(lista, 2)
+
+                % ciclo sui pannelli di nuovo, per determinare il beta
+                for xIndex = 1:size(x) - 1
+                    pannelloCiclo = lista(indexPannello);
+                    % indiceSuccessivo = (xIndex+1)*(xIndex+1 <= size(pannelloCiclo.Rij, 2))+1*(xIndex+1 > size(pannelloCiclo.Rij, 2))
+                    arg = -(lista(xIndex).lunghezzaPannello^2-pannelloCiclo.Rij(xIndex)^2-pannelloCiclo.Rij(xIndex+1)^2)/(2*pannelloCiclo.Rij(xIndex)*pannelloCiclo.Rij(xIndex+1));
+                    beta = real(acos(arg));
+                    pannelloCiclo.angoliBeta(xIndex) = beta;
+                end
+            end
+
         end
 
     end

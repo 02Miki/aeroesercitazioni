@@ -59,11 +59,13 @@ close all
 
 
 vel = 1;
-alfaImmaginario = 1i*deg2rad(10);
+alfa = deg2rad(10);
+alfaImmaginario = 1i*alfa;
 raggio = 1;
 
 x = linspace(-8, 8);
 y = linspace(-8, 8);
+
 
 [X,Y] = meshgrid(x,y);
 
@@ -76,7 +78,7 @@ beta = acos((sqrt(raggio^2-centro(2)^2))/raggio);
 
 circ = -2*vel*sin(beta+pi+deg2rad(10))*2*pi*raggio;
 
-W = @(z) (-vel*((z-zc)*exp(alfaImmaginario)+raggio^2./(z-zc).*exp(-alfaImmaginario))-1i*circ/(2*pi)*log((z-zc)./raggio)).*(abs(z) > raggio);
+W = @(z) (-vel*((z-zc)*exp(alfaImmaginario)+raggio^2./(z-zc).*exp(-alfaImmaginario))-1i*circ/(2*pi)*log((z-zc)./raggio)).*(abs(z-zc) > raggio);
 
 tetaPrimo = linspace(0, 2*pi);
 
@@ -92,10 +94,22 @@ figure
 hold on
 zita = z_cerchio+b^2./z_cerchio;
 z = complex(X,Y);
-plot(real(zita), imag(zita),"LineWidth", 3)
 zetaNew = z+b^2./z;
 contour(real(zetaNew), imag(zetaNew), imag(W(complex(X,Y))), 100)
+plot(real(zita), imag(zita),"LineWidth", 3)
+
 axis equal
+
+v = @(x) 2*vel.*sin(x+alfa) + circ/(2*pi*alfa);
+
+vStar = v(tetaPrimo)./abs(1-b^2./z);
+
+cp = @(velocita) 1-(velocita./vel).^2;
+
+figure
+plot(real(zetaNew), cp(vStar))
+axis equal
+
 
 
 
