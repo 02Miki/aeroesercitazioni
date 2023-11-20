@@ -72,7 +72,7 @@ u = 1;
 circ = 1/2 * 4*pi*a*u;
 
 r = linspace(0.01, 5);
-teta = linspace(0.01, 2*pi-0.0001);
+teta = linspace(0.00001, 2*pi-0.00001);
 
 x = r.*cos(teta);
 y = r.*sin(teta);
@@ -97,7 +97,6 @@ valori = solve(vTeta, tetaAngolo)
 
 for valore = valori
     plot(cos(valore), sin(valore), "or", 'MarkerFaceColor', 'r', LineWidth=2)
-
 end
 
 
@@ -113,7 +112,7 @@ quiver(a*cos(teta), a*sin(teta), cp.*cos(teta), cp.*sin(teta), "LineWidth", 1.5)
 axis equal
 
 cl = trapz(teta, -cp.*sin(teta))
-c = trapz(teta, -cp.*cos(teta))
+cd = trapz(teta, -cp.*cos(teta))
 
 
 
