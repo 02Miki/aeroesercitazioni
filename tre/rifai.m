@@ -95,10 +95,13 @@ syms tetaAngolo
 vTeta = @(tetaAngolo) (2.*sin(tetaAngolo))/a.^2 - sin(tetaAngolo)*(1./a.^2 - 1) + 1./a;
 valori = solve(vTeta, tetaAngolo)
 
+for valore = valori
+    plot(cos(valore), sin(valore), "or", 'MarkerFaceColor', 'r', LineWidth=2)
+
+end
 
 
-plot(cos(valori(1)), sin(valori(1)), "or", LineWidth=2)
-plot(cos(valori(2)), sin(valori(2)), "or", LineWidth=2)
+% plot(cos(valori(2)), sin(valori(2)), "or", LineWidth=2)
 
 cp = 1-(vTeta(teta)./u).^2
 
