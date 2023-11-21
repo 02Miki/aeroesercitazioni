@@ -16,7 +16,7 @@ m = 1.1;
 alfa = 0;
 
 x = linspace(-2,2);
-y = linspace(-2,2);
+y = linspace(-0.5,2.5);
 
 
 k = vInf*exp(-1i*alfa);
@@ -34,8 +34,8 @@ derZ = k*m*z.^(m-1).*(imag(z) > yRetta);
 
 figure
 hold on
-contour(X, Y, real(w(z)), "r")
-contour(X, Y, imag(w(z)), "b")
+contour(X, Y, real(w(z)), 31,"r")
+contour(X, Y, imag(w(z)), 31,"b")
 
 
 
