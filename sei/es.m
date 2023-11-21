@@ -56,7 +56,11 @@ velFinali = vel;
 posDiscontinuita = [solve(x1, y), solve(x2, y)];
 
 % Creo un ciclo al contrario, per esempio se ho 8 velocità, da 8 a 2, con
-% un passo negativo. Uso 2 e non 1 perché dentro il for uso anche indice-1
+% un passo negativo. Uso 2 e non 1 perché dentro il for uso anche indice-1.
+% Uso un ciclo al contrario perché così non si va a creare una differenza
+% tra gli indici "veri" e quelli che uso dentro il ciclo. Usassi un ciclo
+% normale, aggiungendo un elemento, si sposterebbero tutti gli elementi di
+% uno
 for indice = size(vel,2):-1:2
     % se il segno della velocità all'indice i è diverso dal segno della
     % velocità all'indice i-1, allora vai dentro l'if
