@@ -18,4 +18,7 @@ cp(3/2*pi)
 x = r.*cos(teta);
 y = r.*sin(teta);
 
+hold on
 quiver(x, y, cp(teta).*cos(teta), cp(teta).*sin(teta))
+plot(r*cos(teta), r*sin(teta), "k")
+axis equal
