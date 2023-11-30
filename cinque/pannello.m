@@ -1,7 +1,7 @@
 classdef pannello < handle
     %PANNELLO Summary of this class goes here
     %   Detailed explanation goes here
-    
+
     properties
         puntoControlloX
         puntoControlloY
@@ -9,8 +9,9 @@ classdef pannello < handle
         Rij
         lunghezzaPannello
         angoliBeta
+        Aij
     end
-    
+
     methods
         function obj = pannello(puntoControlloX, puntoControlloY, angolo, lunghezzaPannello)
             %PANNELLO Construct an instance of this class
@@ -21,11 +22,17 @@ classdef pannello < handle
             obj.lunghezzaPannello = lunghezzaPannello;
 
         end
-        
+
         function outputArg = method1(obj,inputArg)
             %METHOD1 Summary of this method goes here
             %   Detailed explanation goes here
             outputArg = obj.Property1 + inputArg;
+        end
+
+        function output = generaMatrici(obj)
+            for indice = size(obj.Rij)
+
+            end
         end
     end
 
@@ -50,19 +57,30 @@ classdef pannello < handle
                     deltaY = yMedio - y(indiceX);
 
                     pan.Rij(indiceX) = sqrt(deltaX^2 + deltaY^2);
+
                 end
-    
+
             end
-%            genero angoli beta, ciclo sui pannelli
+            %            genero angoli beta, ciclo sui pannelli
             for indexPannello = 1:size(lista, 2)
+                pannelloCiclo = lista(indexPannello);
 
                 % ciclo sui pannelli di nuovo, per determinare il beta
                 for xIndex = 1:size(x) - 1
-                    pannelloCiclo = lista(indexPannello);
                     % indiceSuccessivo = (xIndex+1)*(xIndex+1 <= size(pannelloCiclo.Rij, 2))+1*(xIndex+1 > size(pannelloCiclo.Rij, 2))
                     arg = -(lista(xIndex).lunghezzaPannello^2-pannelloCiclo.Rij(xIndex)^2-pannelloCiclo.Rij(xIndex+1)^2)/(2*pannelloCiclo.Rij(xIndex)*pannelloCiclo.Rij(xIndex+1));
                     beta = real(acos(arg));
                     pannelloCiclo.angoliBeta(xIndex) = beta;
+                    altroPannello = lista((xIndex+1) * (xIndex+1<=size(lista,2)) + 1*(xIndex+1>size(lista,2)));
+
+                    aij = log(altroPannello.Rij(xIndex)/pannelloCiclo.Rij(xIndex))*sin(altroPannello.angolo-pannelloCiclo.angolo) + beta*cos(altroPannello.angolo-pannelloCiclo.angolo);
+                    altroPannello.angolo
+                    pannelloCiclo.angolo
+                    pause
+                    
+                    pannelloCiclo.Aij(xIndex) = aij;
+
+
                 end
             end
 

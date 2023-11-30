@@ -111,7 +111,21 @@ plot(real(zetaNew), cp(vStar))
 axis equal
 
 
+%% esercizio 2 libro whatsapp
 
+clc
+clear
+close all
+
+clc
+clear
+close all
+
+raggio = 0.5
+vInf = 40;
+vTarget = 95;
+
+(vTarget - 2*vInf*sin(pi/2))*(2*pi*raggio)/pi
 
 
 

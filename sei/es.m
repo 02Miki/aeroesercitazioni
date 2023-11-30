@@ -85,12 +85,15 @@ end
 plot((2.*(yVal)./b), velFinali(1, 2:end-1) / (circ/pi*b), "k", LineWidth=1.5)
 
 %% 3
+
 clc
 clear
 close all
 
 
-
+k = 1
+l = @(y) lZero * sqrt(1-y.^2./b^2)
+circ = @(y) pi*l(y)
 
 
 
