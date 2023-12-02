@@ -95,7 +95,7 @@ subplot(2,2, 1)
 
 hold on
 Z = complex(X,Y);
-contour(X, Y, imag(W(Z)), 100)
+contour(X, Y, imag(W(Z)), 31)
 plot(real(z_cerchio), imag(z_cerchio), "LineWidth", 3)
 axis equal
 
@@ -107,8 +107,8 @@ zita = z_cerchio+b^2./z_cerchio;
 zetaNew = Z+b^2./Z;
 
 
-contour(real(zetaNew), imag(zetaNew), imag(W(Z)), 100)
-plot(real(zita), imag(zita),"LineWidth", 3)
+contour(real(zetaNew), imag(zetaNew), imag(W(Z)), 31)
+plot(real(zita), imag(zita),"LineWidth", 2)
 
 axis equal
 
@@ -122,12 +122,12 @@ cp = @(velocita) 1-(velocita./vInf).^2;
 subplot(2,2, 3)
 
 plot(real(zita), cp(vStar), "b-o", LineWidth=1)
-
+title("Cp-Zita")
 subplot(2,2, 4)
 
 plot(real(zita) ,((vStar)./vInf).^2, "b-o")
 axis equal
-
+title("(V/VInf)^2-Zita")
 
 xi = real(zita);
 
@@ -159,7 +159,7 @@ subplot(2,1,1)
 hold on
 plot(-real(zita) + real(zita(1)), imag(zita))
 
-plot(xAla, yAla)
+plot([xAla; 1], [yAla; yAla(1)])
 legend("KJ", "XFoil")
 axis equal
 subplot(2,1,2)

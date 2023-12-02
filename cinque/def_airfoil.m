@@ -11,13 +11,13 @@ iaf.is_finiteTE=0;
 
 af = naca4gen(iaf);
 
-plot(af.x,af.z,'bo-')
-
-xlabel('x/c','FontSize',30);
-ylabel('y/c','FontSize',30);
-
-set(gca, 'FontSize',20);
-axis equal
+% plot(af.x,af.z,'bo-')
+% 
+% xlabel('x/c','FontSize',30);
+% ylabel('y/c','FontSize',30);
+% 
+% set(gca, 'FontSize',20);
+% axis equal
 %plot(af.xU,af.zU,'bo-')
 %hold on
 %plot(af.xL,af.zL,'ro-');

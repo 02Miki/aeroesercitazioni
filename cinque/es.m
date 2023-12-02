@@ -4,7 +4,7 @@ clc
 clear
 close all
 
-[iaf, af] = def_airfoil('6315', 4)
+[iaf, af] = def_airfoil('6315', 10)
 
 
 x = flipud(af.x);
