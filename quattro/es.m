@@ -168,7 +168,9 @@ hold on
 plot(xAla, foil.cp)
 plot(-real(zita) + real(zita(1)), cp)
 legend("KJ", "XFoil")
-set ( gca, 'ydir', 'reverse' )
+
+% Flippa il grafico
+set(gca, 'ydir', 'reverse')
 
 
 
