@@ -60,9 +60,10 @@ close all
 
 vel = 1;
 alfa = deg2rad(10);
-alfaImmaginario = 1i*alfa;
 raggio = 1;
 
+
+alfaImmaginario = 1i*alfa;
 x = linspace(-8, 8);
 y = linspace(-8, 8);
 
@@ -83,32 +84,68 @@ W = @(z) (-vel*((z-zc)*exp(alfaImmaginario)+raggio^2./(z-zc).*exp(-alfaImmaginar
 tetaPrimo = linspace(0, 2*pi);
 
 z_cerchio = complex(centro(1), centro(2)) + raggio*exp(1i*tetaPrimo);
-hold on
+subplot(2,2, 1)
 
+hold on
 contour(X, Y, imag(W(complex(X,Y))), 100)
 plot(real(z_cerchio), imag(z_cerchio), "LineWidth",5)
 axis equal
 
 
-figure
+
+subplot(2,2, 2)
+
 hold on
 zita = z_cerchio+b^2./z_cerchio;
-z = complex(X,Y);
-zetaNew = z+b^2./z;
+Z = complex(X,Y);
+zetaNew = Z+b^2./Z;
+zeta = complex(x,y);
+
 contour(real(zetaNew), imag(zetaNew), imag(W(complex(X,Y))), 100)
 plot(real(zita), imag(zita),"LineWidth", 3)
 
 axis equal
 
-v = @(x) 2*vel.*sin(x+alfa) + circ/(2*pi*alfa);
+v = @(x) 2*vel.*sin(x+alfa) + circ/(2*pi*raggio);
 
-vStar = v(tetaPrimo)./abs(1-b^2./z);
-
+vStar = v(tetaPrimo)./abs(1-b^2./z_cerchio.^2);
+% da bernoulli
 cp = @(velocita) 1-(velocita./vel).^2;
 
-figure
-plot(real(zetaNew), cp(vStar))
+
+subplot(2,2, 3)
+
+plot(real(zita), cp(vStar), "b-o", LineWidth=1)
+
+subplot(2,2, 4)
+
+plot(real(zita) ,((vStar)./vel).^2, "b-o")
 axis equal
+
+beta = 0;
+b = 1/4;
+tmaxL = 0.144;
+xc = 0.144/1.3*1/4;
+raggio = (b+xc)/cos(beta)
+yc = sin(beta)*raggio;
+
+
+xi = real(zita);
+
+[pol, foil] = xfoil('NACA 0015', 10)
+figure
+
+% plot(foil.x, foil.y)
+
+plot(foil.x(1:length(foil.cp)), foil.cp)
+
+
+
+
+
+
+
+
 
 
 %% esercizio 2 libro whatsapp
@@ -121,7 +158,7 @@ clc
 clear
 close all
 
-raggio = 0.5
+raggio = 0.5;
 vInf = 40;
 vTarget = 95;
 
