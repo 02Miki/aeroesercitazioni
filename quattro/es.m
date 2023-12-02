@@ -57,8 +57,12 @@ clc
 clear
 close all
 
-
-vel = 1;
+Re = 1000000;
+viscositaDinamica = 1.8*10^-5;
+% re = u*l*rho/mu;
+densitaAria = 1.225;
+% vel = 1;
+vInf = Re*viscositaDinamica/densitaAria;
 alfa = deg2rad(10);
 raggio = 1;
 
@@ -75,42 +79,44 @@ centro = [0.1, 0.1];
 b = sqrt(raggio^2-centro(2)^2) - centro(1);
 zc = complex(centro(1), centro(2));
 
-beta = acos((sqrt(raggio^2-centro(2)^2))/raggio);
+% beta = acos((sqrt(raggio^2-centro(2)^2))/raggio);
+beta = asin(centro(2)/raggio);
+% centroy = raggio*sin(beta)
 
-circ = -2*vel*sin(beta+pi+deg2rad(10))*2*pi*raggio;
+% Calcolo la circuitazione imponendo V in B = 0
+circ = -2*vInf*sin(beta+pi+deg2rad(10))*2*pi*raggio;
 
-W = @(z) (-vel*((z-zc)*exp(alfaImmaginario)+raggio^2./(z-zc).*exp(-alfaImmaginario))-1i*circ/(2*pi)*log((z-zc)./raggio)).*(abs(z-zc) > raggio);
+W = @(z) (-vInf*((z-zc)*exp(alfaImmaginario)+raggio^2./(z-zc).*exp(-alfaImmaginario))-1i*circ/(2*pi)*log((z-zc)./raggio)).*(abs(z-zc) > raggio);
 
-tetaPrimo = linspace(0, 2*pi);
+tetaPrimo = linspace(0, 2*pi, 160);
 
 z_cerchio = complex(centro(1), centro(2)) + raggio*exp(1i*tetaPrimo);
 subplot(2,2, 1)
 
 hold on
-contour(X, Y, imag(W(complex(X,Y))), 100)
-plot(real(z_cerchio), imag(z_cerchio), "LineWidth",5)
+Z = complex(X,Y);
+contour(X, Y, imag(W(Z)), 100)
+plot(real(z_cerchio), imag(z_cerchio), "LineWidth", 3)
 axis equal
-
-
 
 subplot(2,2, 2)
 
 hold on
 zita = z_cerchio+b^2./z_cerchio;
-Z = complex(X,Y);
-zetaNew = Z+b^2./Z;
-zeta = complex(x,y);
 
-contour(real(zetaNew), imag(zetaNew), imag(W(complex(X,Y))), 100)
+zetaNew = Z+b^2./Z;
+
+
+contour(real(zetaNew), imag(zetaNew), imag(W(Z)), 100)
 plot(real(zita), imag(zita),"LineWidth", 3)
 
 axis equal
 
-v = @(x) 2*vel.*sin(x+alfa) + circ/(2*pi*raggio);
+v = @(tetaPrimo) 2*vInf.*sin(tetaPrimo+alfa) + circ/(2*pi*raggio);
 
-vStar = v(tetaPrimo)./abs(1-b^2./z_cerchio.^2);
+vStar = v(tetaPrimo)./abs(1-b^2./(z_cerchio.^2));
 % da bernoulli
-cp = @(velocita) 1-(velocita./vel).^2;
+cp = @(velocita) 1-(velocita./vInf).^2;
 
 
 subplot(2,2, 3)
@@ -119,26 +125,50 @@ plot(real(zita), cp(vStar), "b-o", LineWidth=1)
 
 subplot(2,2, 4)
 
-plot(real(zita) ,((vStar)./vel).^2, "b-o")
+plot(real(zita) ,((vStar)./vInf).^2, "b-o")
 axis equal
-
-beta = 0;
-b = 1/4;
-tmaxL = 0.144;
-xc = 0.144/1.3*1/4;
-raggio = (b+xc)/cos(beta)
-yc = sin(beta)*raggio;
 
 
 xi = real(zita);
 
-[pol, foil] = xfoil('NACA 0015', 10)
+[pol, foil] = xfoil('NACA0015', 10);
 figure
 
 % plot(foil.x, foil.y)
 
-plot(foil.x(1:length(foil.cp)), foil.cp)
+xAla = foil.x(1:length(foil.cp));
+yAla = foil.y(1:length(foil.cp));
+hold on
 
+beta_Dopo = 0;
+corda_Dopo = 1;
+b_Dopo = corda_Dopo/4;
+tMax = 0.15;
+% tmaxL = 0.144;
+
+xc = tMax/5.2;
+yc = 0;
+raggio_Dopo = (b_Dopo+xc)/cos(beta_Dopo);
+
+yc = sin(beta_Dopo)*raggio_Dopo;
+
+[cp, zita] = kj(pol.Re, raggio_Dopo, [xc, yc], 10);
+
+
+subplot(2,1,1)
+hold on
+plot(-real(zita) + real(zita(1)), imag(zita))
+
+plot(xAla, yAla)
+legend("KJ", "XFoil")
+axis equal
+subplot(2,1,2)
+
+hold on
+plot(xAla, foil.cp)
+plot(-real(zita) + real(zita(1)), cp)
+legend("KJ", "XFoil")
+set ( gca, 'ydir', 'reverse' )
 
 
 
@@ -158,11 +188,11 @@ clc
 clear
 close all
 
-raggio = 0.5;
+raggio_Dopo = 0.5;
 vInf = 40;
 vTarget = 95;
 
-(vTarget - 2*vInf*sin(pi/2))*(2*pi*raggio)/pi
+(vTarget - 2*vInf*sin(pi/2))*(2*pi*raggio_Dopo)/pi
 
 
 
@@ -175,13 +205,13 @@ vTarget = 95;
 syms circ
 
 
-vel = 1;
+vInf = 1;
 alfaImmaginario = 1i*deg2rad(10);
-raggio = 1;
+raggio_Dopo = 1;
 centro = [0.1, 0.1];
 
 
-Wgiovanji = 2*vel*sin(beta+pi+deg2rad(10))+circ/(2*pi*raggio);
+Wgiovanji = 2*vInf*sin(beta_Dopo+pi+deg2rad(10))+circ/(2*pi*raggio_Dopo);
 
 
 
