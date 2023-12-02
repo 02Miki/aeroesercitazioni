@@ -76,7 +76,7 @@ classdef pannello < handle
                     aij = log(altroPannello.Rij(xIndex)/pannelloCiclo.Rij(xIndex))*sin(altroPannello.angolo-pannelloCiclo.angolo) + beta*cos(altroPannello.angolo-pannelloCiclo.angolo);
                     altroPannello.angolo
                     pannelloCiclo.angolo
-                    pause
+                    
                     
                     pannelloCiclo.Aij(xIndex) = aij;
 
