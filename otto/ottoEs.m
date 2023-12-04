@@ -43,24 +43,25 @@ Re = vMedia*diametro/viscositaCinematica
 % shading interp
 
 %% 2
-
 clc
 clear
 close all
 
+viscositaCinematica = 4.5*10^-6; %m^2/st6  ni
 
+densitaStorpia = 0.917; %g/cm^3
+densita = densitaStorpia/1000*(1000*1000);
+portataStorpia = 10; % l/min
+portata = portataStorpia/(60*1000)
+reynolds = 2000;
 
+% portata = u*a = u * pi * R^2
+% u = portata/(pi*R^2)
+% re = portata/(pi*R^2)*2*R/viscositaCinematica
+% R = portata/(pi*R)*2/(viscositaCinematica*reynolds)
+R = 2*portata/(pi*viscositaCinematica*reynolds)
+D = 2*R
 
-
-
-
-
-%% 2
-clc
-clear
-
-viscositaCinematica = 4.5*10^-6; %m^2/st6
-densita = 0.917; %g/cm^3
-
+deltaP = -8*portata*densita*viscositaCinematica/(pi*R^4)
 
 
