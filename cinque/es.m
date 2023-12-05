@@ -1,10 +1,10 @@
 
 %% 1
-clc
+
 clear
 close all
 
-[iaf, af] = def_airfoil('0015', 4);
+[iaf, af] = def_airfoil('0015', 2);
 
 
 x = flipud(af.x);
@@ -34,6 +34,13 @@ quiver([pannelli.puntoControlloX], [pannelli.puntoControlloY], -sin([pannelli.an
 quiver([pannelli.puntoControlloX], [pannelli.puntoControlloY], cos([pannelli.angolo]), sin([pannelli.angolo]))
 
 legend("Profilo Alare", "Punti di Controllo", "Vettori Tangenti", "Vettori Normali")
+
+matrice = [];
+for pannello = pannelli
+    matrice(end+1, :) = [pannello.Aij, pannello.AiN]
+end
+matrice(end+1, :) = [pannelli(end).ANj, pannello.ANN]
+% matrice(end, end+1) = []
 
 
 

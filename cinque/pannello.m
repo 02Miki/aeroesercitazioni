@@ -10,7 +10,11 @@ classdef pannello < handle
         lunghezzaPannello
         angoliBeta
         Aij
+        AiN
+        ANj
+        ANN
     end
+        
 
     methods
         function obj = pannello(puntoControlloX, puntoControlloY, angolo, lunghezzaPannello)
@@ -97,24 +101,47 @@ classdef pannello < handle
 
 
             end
-
-            for indexR = 1:size(x)-1
-                size(x)
-                for indexPannello = 1:size(lista, 2)-1
-                    pannelloCiclo = lista(indexPannello);
-                    altroPannello = lista(indexPannello+1);
+            
+            somma3 = zeros(1, (size(x,1)-1));
+            somma4 = 0;
+            for indexPannello = 1:size(lista, 2)
+                pannelloCiclo = lista(indexPannello);
+                somma2 = 0;
+                for indexR = 1:size(x)-1
                     beta = pannelloCiclo.angoliBeta(indexR);
-                    aij = log(altroPannello.Rij(indexR)/pannelloCiclo.Rij(indexR))*pannello.sinStrano(altroPannello.angolo, pannelloCiclo.angolo) + beta*pannello.cosStrano(altroPannello.angolo,pannelloCiclo.angolo);
-                    altroPannello.Rij(indexR)
-                    pannelloCiclo.Rij(indexR)
-                    % pause
-                    pannelloCiclo.Aij(indexR) = aij;
+                    if indexR == indexPannello
+                        beta
+                        beta = -beta;
+                    end
+                    altroPannello = lista(indexR);
+
+                    % 1 matrice
+                    % il beta ha meno davanti perché altrimenti non veniva,
+                    % e poi aij ha un abs perché i risultati sono tutti
+                    % positivi
+                
+                    aij = log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo) - beta*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo);
+                    pannelloCiclo.Aij(indexR) = abs(aij)/(2*pi);
+                    % 2 matrice
+                    somma2 = somma2+log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo) + beta*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo);
+                    if indexPannello == 1 || indexPannello == size(lista, 2)
+                        % 3 matrice, metto - davanti a beta per stessa
+                        % motivazione
+
+                        somma3(indexR) = somma3(indexR)-beta*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo)-log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo);
+                        % 4 matrice
+
+                        somma4 = somma4 - beta*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo)+log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo)
+                    end
+
+
+                    
                 end
+                pannelloCiclo.AiN = somma2/(2*pi);
             end
+            lista(end).ANj = somma3./(2*pi);
+            lista(end).ANN = somma4./(2*pi);
         end
-
-        
-
     end
 
 end
