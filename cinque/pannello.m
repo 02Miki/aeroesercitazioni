@@ -37,6 +37,15 @@ classdef pannello < handle
     end
 
     methods(Static)
+        function output = sinStrano(angolo1, angolo2)
+            output = sin(angolo1)*cos(angolo2)-cos(angolo1)*sin(angolo2);
+        end
+
+        function output = cosStrano(angolo1, angolo2)
+            output = sin(angolo1)*sin(angolo2)+cos(angolo1)*cos(angolo2);
+        end
+
+
         function lista = generaPuntiControllo(x, y)
             for xIndex = 1:size(x) - 1
                 xMedio = (x(xIndex) + x(xIndex+1))/2;
@@ -71,20 +80,40 @@ classdef pannello < handle
                     arg = -(lista(xIndex).lunghezzaPannello^2-pannelloCiclo.Rij(xIndex)^2-pannelloCiclo.Rij(xIndex+1)^2)/(2*pannelloCiclo.Rij(xIndex)*pannelloCiclo.Rij(xIndex+1));
                     beta = real(acos(arg));
                     pannelloCiclo.angoliBeta(xIndex) = beta;
-                    altroPannello = lista((xIndex+1) * (xIndex+1<=size(lista,2)) + 1*(xIndex+1>size(lista,2)));
-
-                    aij = log(altroPannello.Rij(xIndex)/pannelloCiclo.Rij(xIndex))*sin(altroPannello.angolo-pannelloCiclo.angolo) + beta*cos(altroPannello.angolo-pannelloCiclo.angolo);
-                    altroPannello.angolo
-                    pannelloCiclo.angolo
-                    
-                    
-                    pannelloCiclo.Aij(xIndex) = aij;
+                    % altroPannello = lista((xIndex+1) * (xIndex+1<=size(lista,2)) + 1*(xIndex+1>size(lista,2)));
+                    % 
+                    % aij = log(altroPannello.Rij(xIndex)/pannelloCiclo.Rij(xIndex))*pannello.sinStrano(altroPannello.angolo, pannelloCiclo.angolo) + beta*pannello.cosStrano(altroPannello.angolo,pannelloCiclo.angolo);
+                    % altroPannello.Rij(xIndex)
+                    % pannelloCiclo.Rij(xIndex)
+                    % pause
+                    % altroPannello.angolo;
+                    % pannelloCiclo.angolo;
+                    % 
+                    % 
+                    % pannelloCiclo.Aij(xIndex) = aij;
 
 
                 end
+
+
             end
 
+            for indexR = 1:size(x)-1
+                size(x)
+                for indexPannello = 1:size(lista, 2)-1
+                    pannelloCiclo = lista(indexPannello);
+                    altroPannello = lista(indexPannello+1);
+                    beta = pannelloCiclo.angoliBeta(indexR);
+                    aij = log(altroPannello.Rij(indexR)/pannelloCiclo.Rij(indexR))*pannello.sinStrano(altroPannello.angolo, pannelloCiclo.angolo) + beta*pannello.cosStrano(altroPannello.angolo,pannelloCiclo.angolo);
+                    altroPannello.Rij(indexR)
+                    pannelloCiclo.Rij(indexR)
+                    % pause
+                    pannelloCiclo.Aij(indexR) = aij;
+                end
+            end
         end
+
+        
 
     end
 
