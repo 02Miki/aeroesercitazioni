@@ -4,6 +4,8 @@
 clear
 close all
 
+vInf = 1;
+angoloAttacco = 0;
 [iaf, af] = def_airfoil('0015', 2);
 
 
@@ -21,7 +23,7 @@ axis equal
 % trova deltax = (x+1) - x
 
 
-pannelli = pannello.generaPuntiControllo(x, y);
+pannelli = pannello.generaPuntiControllo(x, y, vInf, angoloAttacco);
 
 figure
 hold on
@@ -36,10 +38,13 @@ quiver([pannelli.puntoControlloX], [pannelli.puntoControlloY], cos([pannelli.ang
 legend("Profilo Alare", "Punti di Controllo", "Vettori Tangenti", "Vettori Normali")
 
 matrice = [];
+bi = [];
 for pannello = pannelli
-    matrice(end+1, :) = [pannello.Aij, pannello.AiN]
+    matrice(end+1, :) = [pannello.Aij, pannello.AiN];
+    bi(end+1, 1) = pannello.bi;
 end
-matrice(end+1, :) = [pannelli(end).ANj, pannello.ANN]
+matrice(end+1, :) = [pannelli(end).ANj, pannelli(end).ANN]
+bi(end+1, 1) = pannelli(end).bN
 % matrice(end, end+1) = []
 
 

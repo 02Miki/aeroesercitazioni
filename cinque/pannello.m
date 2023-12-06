@@ -13,18 +13,23 @@ classdef pannello < handle
         AiN
         ANj
         ANN
+        vInf
+        angoloAttacco
+        bi
+        bN
     end
         
 
     methods
-        function obj = pannello(puntoControlloX, puntoControlloY, angolo, lunghezzaPannello)
+        function obj = pannello(puntoControlloX, puntoControlloY, angolo, lunghezzaPannello, vInf, angoloAttacco)
             %PANNELLO Construct an instance of this class
             %   Detailed explanation goes here
             obj.puntoControlloX = puntoControlloX;
             obj.puntoControlloY = puntoControlloY;
             obj.angolo = angolo;
             obj.lunghezzaPannello = lunghezzaPannello;
-
+            obj.vInf = vInf;
+            obj.angoloAttacco = angoloAttacco;
         end
 
         function outputArg = method1(obj,inputArg)
@@ -50,7 +55,7 @@ classdef pannello < handle
         end
 
 
-        function lista = generaPuntiControllo(x, y)
+        function lista = generaPuntiControllo(x, y, vInf, angoloAttacco)
             for xIndex = 1:size(x) - 1
                 xMedio = (x(xIndex) + x(xIndex+1))/2;
                 yMedio = (y(xIndex) + y(xIndex+1))/2;
@@ -61,7 +66,7 @@ classdef pannello < handle
                 % angolo = sign(deltaY).*atan2(abs(deltaY), abs(deltaX));
                 angolo = atan2(deltaYCentro, deltaXCentro);
                 lunghezza =  sqrt(deltaXCentro^2 + deltaYCentro^2);
-                pan = pannello(xMedio, yMedio, angolo, lunghezza);
+                pan = pannello(xMedio, yMedio, angolo, lunghezza, vInf, angoloAttacco);
                 lista(xIndex) = pan;
 
                 % for indiceX = 1:size(x) - 1
@@ -110,7 +115,6 @@ classdef pannello < handle
                 for indexR = 1:size(x)-1
                     beta = pannelloCiclo.angoliBeta(indexR);
                     if indexR == indexPannello
-                        beta
                         beta = -beta;
                     end
                     altroPannello = lista(indexR);
@@ -123,6 +127,7 @@ classdef pannello < handle
                     aij = log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo) - beta*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo);
                     pannelloCiclo.Aij(indexR) = abs(aij)/(2*pi);
                     % 2 matrice
+                    
                     somma2 = somma2+log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo) + beta*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo);
                     if indexPannello == 1 || indexPannello == size(lista, 2)
                         % 3 matrice, metto - davanti a beta per stessa
@@ -130,9 +135,12 @@ classdef pannello < handle
 
                         somma3(indexR) = somma3(indexR)-beta*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo)-log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo);
                         % 4 matrice
-
-                        somma4 = somma4 - beta*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo)+log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo)
+                        somma4 = somma4 - beta*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo)+log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo);
                     end
+
+                    %bi
+                    pannelloCiclo.bi = pannelloCiclo.vInf*pannello.sinStrano(pannelloCiclo.angolo, pannelloCiclo.angoloAttacco);
+
 
 
                     
@@ -141,6 +149,8 @@ classdef pannello < handle
             end
             lista(end).ANj = somma3./(2*pi);
             lista(end).ANN = somma4./(2*pi);
+            lista(end).bN = -lista(end).vInf*(pannello.cosStrano(lista(1).angolo, lista(1).angoloAttacco) + pannello.cosStrano(lista(end).angolo, lista(end).angoloAttacco));
+
         end
     end
 
