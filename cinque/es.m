@@ -1,12 +1,18 @@
 
 %% 1
 
-clear
+% clear
 close all
 
-vInf = 1;
-angoloAttacco = 0;
-[iaf, af] = def_airfoil('6315', 3);
+Re = 1000000;
+viscositaDinamica = 1.8*10^-5;
+% re = u*l*rho/mu;
+densitaAria = 1.225;
+% vel = 1;
+vInf = Re*viscositaDinamica/densitaAria;
+angoloAttacco = deg2rad(5);
+NACA = '6315';
+[iaf, af] = def_airfoil(NACA, 50);
 
 
 x = flipud(af.x);
@@ -39,11 +45,13 @@ legend("Profilo Alare", "Punti di Controllo", "Vettori Tangenti", "Vettori Norma
 
 matrice = [];
 bi = [];
+angoliBeta = [];
 for pannelloCiclo = pannelli
     matrice(end+1, :) = [pannelloCiclo.Aij, pannelloCiclo.AiN];
     bi(end+1, 1) = pannelloCiclo.bi;
+    angoliBeta(end+1, :) = pannelloCiclo.angoliBeta;
 end
-matrice(end+1, :) = [pannelli(end).ANj, 1.8538];
+matrice(end+1, :) = [pannelli(end).ANj, pannelli(end).ANN];
 bi(end+1, 1) = pannelli(end).bN;
 
 
@@ -56,30 +64,48 @@ for pannelloCiclo = pannelli
     primaSomma = 0;
     secondaSomma = 0;
     for j = 1:length(x)-1
-        clc
+       clc
         altroPannello = pannelli(j);
-        cu = q(j)
-        beta = pannelloCiclo.angoliBeta(j) 
-        sin = pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo)
-        cos = pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo)
-        logar = log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j))
-        uno = pannelloCiclo.Rij(j+1)
-        due = pannelloCiclo.Rij(j)
-        primaSomma = q(j)* (pannelloCiclo.angoliBeta(j) * pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo) - log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j)) * pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo));
+        % cu = q(j)
+        % beta = pannelloCiclo.angoliBeta(j) 
+        % sin = pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo)
+        % cos = pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo)
+        % logar = log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j))
+        % uno = pannelloCiclo.Rij(j+1)
+        % due = pannelloCiclo.Rij(j)
+        primaSomma = primaSomma + q(j)* (pannelloCiclo.angoliBeta(j) * pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo) - log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j)) * pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo));
         
-        secondaSomma = gamma * (pannelloCiclo.angoliBeta(j) * pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo) + log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j)) * pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo));
-        som = (primaSomma+secondaSomma)/(2*pi)
-        % pause
+        secondaSomma = secondaSomma + (pannelloCiclo.angoliBeta(j) * pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo) + log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j)) * pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo));
+        
+        som = (primaSomma+secondaSomma)/(2*pi);
+        
         
     end
-    pannelloCiclo.vTangenziale = vInf * pannello.cosStrano(pannelloCiclo.angolo, pannelloCiclo.angoloAttacco) + 1/(2*pi) * (primaSomma+secondaSomma);
+    pannelloCiclo.vTangenziale = vInf * pannello.cosStrano(pannelloCiclo.angolo, pannelloCiclo.angoloAttacco) + 1/(2*pi) * (primaSomma+secondaSomma*gamma);
     pannelloCiclo.cp = 1-pannelloCiclo.vTangenziale^2/vInf^2;
 
 end
 
 figure
 plot([pannelli.puntoControlloX], [pannelli.cp])
+% Flippa il grafico
+set(gca, 'ydir', 'reverse')
+title("Cp-C")
+xlabel("Corda")
+ylabel("Cp")
+xlim([-0.01 1.01])
 
+% xfoil
+hold on
+[pol, foil] = xfoil(strcat('NACA',NACA), rad2deg(angoloAttacco));
+
+
+% plot(foil.x, foil.y)
+
+xAla = foil.x(1:length(foil.cp));
+plot(xAla, foil.cp)
+
+legend("Metodo a Pannelli", "xFoil")
 
 
 

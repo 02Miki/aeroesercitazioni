@@ -97,7 +97,11 @@ classdef pannello < handle
                     
                     argNumeratore = ((x(xIndex)- lista(indexPannello).puntoControlloX) * (y(xIndex+1)-lista(indexPannello).puntoControlloY) - (y(xIndex)-lista(indexPannello).puntoControlloY)*((x(xIndex+1)-lista(indexPannello).puntoControlloX)));
                     argDenominatore = ((x(xIndex)- lista(indexPannello).puntoControlloX) * (x(xIndex+1)-lista(indexPannello).puntoControlloX) + (y(xIndex)-lista(indexPannello).puntoControlloY)*((y(xIndex+1)-lista(indexPannello).puntoControlloY)));
-                    pannelloCiclo.angoliBeta(xIndex) = atan2(argNumeratore, argDenominatore);
+                    beta = atan2(argNumeratore, argDenominatore);
+                    if (xIndex == indexPannello)
+                        beta = abs(beta);
+                    end
+                    pannelloCiclo.angoliBeta(xIndex) = beta;
                     % altroPannello = lista((xIndex+1) * (xIndex+1<=size(lista,2)) + 1*(xIndex+1>size(lista,2)));
                     % 
                     % aij = log(altroPannello.Rij(xIndex)/pannelloCiclo.Rij(xIndex))*pannello.sinStrano(altroPannello.angolo, pannelloCiclo.angolo) + beta*pannello.cosStrano(altroPannello.angolo,pannelloCiclo.angolo);
@@ -132,7 +136,7 @@ classdef pannello < handle
                     % positivi
                 
                     aij = log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo) + beta*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo);
-                    pannelloCiclo.Aij(indexR) = abs(aij)/(2*pi);
+                    pannelloCiclo.Aij(indexR) = aij/(2*pi);
                     % 2 matrice
                     
                     somma2 = somma2+log(pannelloCiclo.Rij(indexR+1)/pannelloCiclo.Rij(indexR))*pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo) - beta*pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo);
