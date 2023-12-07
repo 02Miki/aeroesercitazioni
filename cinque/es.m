@@ -43,7 +43,7 @@ for pannelloCiclo = pannelli
     matrice(end+1, :) = [pannelloCiclo.Aij, pannelloCiclo.AiN];
     bi(end+1, 1) = pannelloCiclo.bi;
 end
-matrice(end+1, :) = [pannelli(end).ANj, pannelli(end).ANN];
+matrice(end+1, :) = [pannelli(end).ANj, 1.8538];
 bi(end+1, 1) = pannelli(end).bN;
 
 
@@ -58,19 +58,21 @@ for pannelloCiclo = pannelli
     for j = 1:length(x)-1
         clc
         altroPannello = pannelli(j);
+        cu = q(j)
         beta = pannelloCiclo.angoliBeta(j) 
         sin = pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo)
         cos = pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo)
         logar = log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j))
         uno = pannelloCiclo.Rij(j+1)
         due = pannelloCiclo.Rij(j)
-        primaSomma = q(j)* (pannelloCiclo.angoliBeta(j) * pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo) - log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j)) * pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo))
+        primaSomma = q(j)* (pannelloCiclo.angoliBeta(j) * pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo) - log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j)) * pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo));
         
-        secondaSomma = gamma/(2*pi) * (pannelloCiclo.angoliBeta(j) * pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo) + log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j)) * pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo))
-        pause
-        ciao = "------"
+        secondaSomma = gamma * (pannelloCiclo.angoliBeta(j) * pannello.cosStrano(pannelloCiclo.angolo, altroPannello.angolo) + log(pannelloCiclo.Rij(j+1)/pannelloCiclo.Rij(j)) * pannello.sinStrano(pannelloCiclo.angolo, altroPannello.angolo));
+        som = (primaSomma+secondaSomma)/(2*pi)
+        % pause
+        
     end
-    pannelloCiclo.vTangenziale = vInf * pannello.cosStrano(pannelloCiclo.angolo, pannelloCiclo.angoloAttacco) * 1/(2*pi) * (primaSomma+secondaSomma);
+    pannelloCiclo.vTangenziale = vInf * pannello.cosStrano(pannelloCiclo.angolo, pannelloCiclo.angoloAttacco) + 1/(2*pi) * (primaSomma+secondaSomma);
     pannelloCiclo.cp = 1-pannelloCiclo.vTangenziale^2/vInf^2;
 
 end

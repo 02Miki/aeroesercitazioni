@@ -88,12 +88,16 @@ classdef pannello < handle
                 % ciclo sui pannelli di nuovo, per determinare il beta
                 for xIndex = 1:size(x) - 1
                     % indiceSuccessivo = (xIndex+1)*(xIndex+1 <= size(pannelloCiclo.Rij, 2))+1*(xIndex+1 > size(pannelloCiclo.Rij, 2))
-                    arg = -(lista(xIndex).lunghezzaPannello^2-pannelloCiclo.Rij(xIndex)^2-pannelloCiclo.Rij(xIndex+1)^2)/(2*pannelloCiclo.Rij(xIndex)*pannelloCiclo.Rij(xIndex+1));
-                    beta = -real(acos(arg));
-                    if xIndex == indexPannello
-                        beta = abs(beta);
-                    end
-                    pannelloCiclo.angoliBeta(xIndex) = beta;
+                    % arg = -(lista(xIndex).lunghezzaPannello^2-pannelloCiclo.Rij(xIndex)^2-pannelloCiclo.Rij(xIndex+1)^2)/(2*pannelloCiclo.Rij(xIndex)*pannelloCiclo.Rij(xIndex+1));
+                    % beta = -real(acos(arg));
+                    % if xIndex == indexPannello
+                    %     beta = abs(beta);
+                    % end
+
+                    
+                    argNumeratore = ((x(xIndex)- lista(indexPannello).puntoControlloX) * (y(xIndex+1)-lista(indexPannello).puntoControlloY) - (y(xIndex)-lista(indexPannello).puntoControlloY)*((x(xIndex+1)-lista(indexPannello).puntoControlloX)));
+                    argDenominatore = ((x(xIndex)- lista(indexPannello).puntoControlloX) * (x(xIndex+1)-lista(indexPannello).puntoControlloX) + (y(xIndex)-lista(indexPannello).puntoControlloY)*((y(xIndex+1)-lista(indexPannello).puntoControlloY)));
+                    pannelloCiclo.angoliBeta(xIndex) = atan2(argNumeratore, argDenominatore);
                     % altroPannello = lista((xIndex+1) * (xIndex+1<=size(lista,2)) + 1*(xIndex+1>size(lista,2)));
                     % 
                     % aij = log(altroPannello.Rij(xIndex)/pannelloCiclo.Rij(xIndex))*pannello.sinStrano(altroPannello.angolo, pannelloCiclo.angolo) + beta*pannello.cosStrano(altroPannello.angolo,pannelloCiclo.angolo);
