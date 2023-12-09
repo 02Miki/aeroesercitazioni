@@ -10,6 +10,7 @@ viscositaDinamica = 1.8*10^-5;
 densitaAria = 1.225;
 % vel = 1;
 vInf = Re*viscositaDinamica/densitaAria;
+
 angoloAttacco = deg2rad(5);
 NACA = '6315';
 [iaf, af] = def_airfoil(NACA, 50);
