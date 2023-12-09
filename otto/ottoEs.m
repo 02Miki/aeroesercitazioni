@@ -15,7 +15,7 @@ viscositaDinamica = viscositaCinematica*densitaAcqua; % mu
 
 u = @(r) R^2/(4*viscositaDinamica)*deltaP/L*(1-r.^2./R^2).*r;
 
-portata = integral(@(r) u(r).*2*pi, 0, R) % m^3/sec
+portata = integral(@(r) u(r).*2*pi, 0, R); % m^3/sec
 
 LITRI_TO_M3 = 1000;
 SECONDI_TO_MINUTI = 60;
@@ -23,7 +23,14 @@ SECONDI_TO_MINUTI = 60;
 portataCorretta = portata*LITRI_TO_M3*SECONDI_TO_MINUTI
 
 vMedia = portata/(pi*R^2)
-Re = vMedia*diametro/viscositaCinematica
+Re = vMedia*diametro/viscositaCinematica;
+
+if Re < 2300
+    disp("Il flusso è laminare")
+    coefficienteResistenza = 64/Re % Coefficiente di resistenza
+else
+    disp("Il flusso non è laminare")
+end
 
 % teta = linspace(0,2*pi);
 % lunghezza = linspace(0, L);
@@ -52,14 +59,14 @@ viscositaCinematica = 4.5*10^-6; %m^2/st6  ni
 densitaStorpia = 0.917; %g/cm^3
 densita = densitaStorpia/1000*(1000*1000);
 portataStorpia = 10; % l/min
-portata = portataStorpia/(60*1000)
+portata = portataStorpia/(60*1000);
 reynolds = 2000;
 
 % portata = u*a = u * pi * R^2
 % u = portata/(pi*R^2)
 % re = portata/(pi*R^2)*2*R/viscositaCinematica
 % R = portata/(pi*R)*2/(viscositaCinematica*reynolds)
-R = 2*portata/(pi*viscositaCinematica*reynolds)
+R = 2*portata/(pi*viscositaCinematica*reynolds);
 D = 2*R
 
 deltaP = -8*portata*densita*viscositaCinematica/(pi*R^4)
