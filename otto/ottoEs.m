@@ -1,4 +1,4 @@
-% % 1
+%% 1
 clc
 clear
 close all
@@ -13,6 +13,7 @@ densitaAcqua = 1000;
 viscositaDinamica = viscositaCinematica*densitaAcqua; % mu
 
 
+% C'è r extra perché determinante jacobiana per l'integrale dopo
 u = @(r) R^2/(4*viscositaDinamica)*deltaP/L*(1-r.^2./R^2).*r;
 
 portata = integral(@(r) u(r).*2*pi, 0, R); % m^3/sec
@@ -74,7 +75,7 @@ D = 2*R
 deltaP = -8*portata*densita*viscositaCinematica/(pi*R^4)
 
 
-%% es extra file
+%% es 1 extra file
 
 clc
 clear
@@ -107,7 +108,20 @@ u = @(r) -raggio^2/(4*viscositaDinamica)*deltaP/lunghezza*(1-r.^2./raggio^2);
 
 u(raggio-0.005)
 
+%% es extra 2 
+clc
+clear
+close all
 
+densita = 850;
+altezza = 0.00375;
+velocita = 0.275;
+tau = 1.89;
+
+viscositaDinamica = tau*altezza/velocita
+reynoldsLimite = 360;
+% re = velocita*altezza*densita/mu
+vLimite = reynoldsLimite*viscositaDinamica/(altezza*densita)
 
 %% problema di stokes
 
@@ -120,14 +134,31 @@ close all
 yEnd = 1000;
 % sbagliato, non fa linspace perché vogliamo solo determinati istanti di
 % tempo, per poter tracciare il grafico
-t = linspace(0,5);
-
+% t = 1:5:20;
 viscositaCinematica = 1.5*10^-6; % ni
 f0 = [1, 0]; % condizioni al contorno
 
+yLim = 50;
+for t = (1:20:100)*1000000
+    etaSpan = [0, yEnd/(2*sqrt(viscositaCinematica*t))];
+    [eta, f, df_deta] = bvpSolve(etaSpan, f0);
+    y = 2*eta*sqrt(viscositaCinematica*t);
+    hold on
+    plot(f, y)
+    ylim([0, yLim])
+end
+x = [0.25, 0.5]
+y = [0.22, 0.5]
+xlabel("u/VPiastra")
+ylabel("y")
+title("Problema di Rayleigh, piastra in movimento")
+annotation('textarrow',x,y,'String','Tempo');
+
+
+
 
 % sbagliato
-etaSpan = y./(2.*sqrt(viscositaCinematica.*t));
+% etaSpan = y./(2.*sqrt(viscositaCinematica.*t));
 
 
 % vorticita = -du/dy = -d(f*U)/dy = -df/deta * deta/dy

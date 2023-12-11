@@ -14,7 +14,7 @@ bc = @(ga, gb) [ga(1) - f0(1); gb(1) - f0(2)];
 sol = bvp4c(ode, bc, bvpinit(etaSpan, f0));
 
 eta = sol.x;
-f = sol.y(y,:);
+f = sol.y(1,:);
 % df/deta
 df_deta = sol.y(2,:);
 end
