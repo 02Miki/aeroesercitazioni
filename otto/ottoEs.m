@@ -25,6 +25,8 @@ portataCorretta = portata*LITRI_TO_M3*SECONDI_TO_MINUTI
 vMedia = portata/(pi*R^2)
 Re = vMedia*diametro/viscositaCinematica;
 
+
+
 if Re < 2300
     disp("Il flusso è laminare")
     coefficienteResistenza = 64/Re % Coefficiente di resistenza
@@ -72,11 +74,62 @@ D = 2*R
 deltaP = -8*portata*densita*viscositaCinematica/(pi*R^4)
 
 
+%% es extra file
+
+clc
+clear
+close all
+
+viscositaDinamica = 0.035;
+densita = 910;
+lunghezza = 25;
+diametro = 0.0254;
+raggio = diametro/2;
+portataStorpia = 5.85; % LITRI/MINUTO
+litri2metri3= 1/1000;
+minuti2secondi = 1/60;
+portata = portataStorpia * litri2metri3 * minuti2secondi;
+% portata = velocita * area = velocita * pi*(diametro/2)^2
+velocita = portata/(pi*(diametro/2)^2)
+reynoldsLimite = 2300;
+% re = densita*velocita*lunghezza/viscositaDinamica
+reynolds = densita*velocita*diametro/viscositaDinamica
+
+if reynolds < reynoldsLimite
+    disp("--- Flusso laminare ---")
+    lambda = 64/reynolds
+end
+
+% portata = -pi/8 * R^4/mu * dp/dx
+deltaP = -portata*8*viscositaDinamica*lunghezza/(pi*raggio^4)
+
+u = @(r) -raggio^2/(4*viscositaDinamica)*deltaP/lunghezza*(1-r.^2./raggio^2);
+
+u(raggio-0.005)
+
+
+
 %% problema di stokes
 
 % non usiamo ode, ma un'altra funzione che ci permette (?)
 
-bvnhhfhuffvhjhjvvhjjkguguigyugui
+clc
+clear
+close all
+
+yEnd = 1000;
+% sbagliato, non fa linspace perché vogliamo solo determinati istanti di
+% tempo, per poter tracciare il grafico
+t = linspace(0,5);
+
+viscositaCinematica = 1.5*10^-6; % ni
+f0 = [1, 0]; % condizioni al contorno
 
 
+% sbagliato
+etaSpan = y./(2.*sqrt(viscositaCinematica.*t));
 
+
+% vorticita = -du/dy = -d(f*U)/dy = -df/deta * deta/dy
+% calcoliamo anche deltaStar = spessore di spostamento
+% calcolare problema di blasius con sta roba
