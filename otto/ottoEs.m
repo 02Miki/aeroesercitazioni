@@ -72,3 +72,11 @@ D = 2*R
 deltaP = -8*portata*densita*viscositaCinematica/(pi*R^4)
 
 
+%% problema di stokes
+
+% non usiamo ode, ma un'altra funzione che ci permette (?)
+
+bvnhhfhuffvhjhjvvhjjkguguigyugui
+
+
+
