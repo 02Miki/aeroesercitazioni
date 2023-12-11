@@ -14,6 +14,7 @@ sol = bvp4c(ode, bc, bvpinit(etaSpan, f0));
 
 eta = sol.x;
 f = sol.y(y,:);
+% df/deta
 df_deta = sol.y(2,:);
 end
 
