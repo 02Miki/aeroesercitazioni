@@ -136,14 +136,18 @@ yEnd = 1000;
 % tempo, per poter tracciare il grafico
 % t = 1:5:20;
 viscositaCinematica = 1.5*10^-6; % ni
+
+% u(y,t) = f*U;
 f0 = [1, 0]; % condizioni al contorno
 
 yLim = 50;
 for t = (1:20:100)*1000000
     etaSpan = [0, yEnd/(2*sqrt(viscositaCinematica*t))];
+   
     [eta, f, df_deta] = bvpSolve(etaSpan, f0);
     y = 2*eta*sqrt(viscositaCinematica*t);
     hold on
+    size(eta)
     plot(f, y)
     ylim([0, yLim])
 end
@@ -164,3 +168,6 @@ annotation('textarrow',x,y,'String','Tempo');
 % vorticita = -du/dy = -d(f*U)/dy = -df/deta * deta/dy
 % calcoliamo anche deltaStar = spessore di spostamento
 % calcolare problema di blasius con sta roba
+
+
+
