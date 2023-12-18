@@ -9,8 +9,8 @@ matrice = readmatrix("vupplane1.csv");
 altezze = matrice(:, 1);
 valori = matrice(:, 2);
 subplot(2, 1, 1)
-title("Strato limite condotto")
 plot(valori, altezze)
+title("Strato limite condotto")
 
 indiciMaggiori = find(altezze>-0.02);
 xlabel("Velocità")
