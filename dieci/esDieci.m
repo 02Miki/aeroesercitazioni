@@ -45,7 +45,7 @@ tetaDue = trapz(altezze(1:indiciMaggiori), valori(1:indiciMaggiori)./uInf.*(1-va
 
 
 % non posso calcolare tau wall perché non ho altezza = 0
-
+% random guess, metto valore a caso e poi avvicino a mano per trovare valore preciso
 uTauGuess = 3.2422;
 k = 0.4;
 c = 5.2;
