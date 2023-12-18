@@ -55,8 +55,4 @@ uPlus = (1/k*log(yPlus) + c).*(yPlus > 10) + yPlus.*(yPlus < 5);
 uCalcolata = @(uTauGuess) uPlus * uTauGuess;
 funzioneCosto = @(tau) sum(abs(uCalcolata(tau) - valori));
 uTau = lsqnonlin(funzioneCosto, uTauGuess)
-% erroreUPlus = 
-
-
-
 
