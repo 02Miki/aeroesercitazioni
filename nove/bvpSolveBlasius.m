@@ -7,11 +7,11 @@ ode = @(eta,g) [g(2); g(3); -g(1)*g(3)];
 % boundary conditions, condizioni al contorno, uso f0(1) e f0(2) per
 % mantenerla generica, nel caso dell'esercizio f0 è 1 e 0 rispettivamente
 % ga(2) è la derivata di ga(1)
-bc = @(ga, gb) [ga(1) - 0; ga(2) - 0; gb(2)-1];
+bc = @(ga, gb) [ga(1) - f0(1); ga(2) - f0(2); gb(2)-f0(3)];
 
 % 3 arg è un guess iniziale
 
-sol = bvp4c(ode, bc, bvpinit(etaSpan, [0 1 0]));
+sol = bvp4c(ode, bc, bvpinit(etaSpan, f0));
 
 eta = sol.x;
 f = sol.y(1,:);
