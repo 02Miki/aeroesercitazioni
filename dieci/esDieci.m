@@ -14,14 +14,16 @@ subplot(2, 1, 1)
 plot(valori, altezze)
 
 indiciMaggiori = find(altezze>-0.02);
+xlabel("Velocità")
+ylabel("Altezza")
 
 subplot(2, 1, 2)
 hold on
-
-plot(valori(1:indiciMaggiori), abs(altezze(1:indiciMaggiori))-0.04)
 plot(valori(indiciMaggiori:end), altezze(indiciMaggiori:end))
-
-legend("Sotto", "Sopra")
+plot(valori(1:indiciMaggiori), abs(altezze(1:indiciMaggiori))-0.04)
+xlabel("Velocità")
+ylabel("Altezza")
+legend("Sopra", "Sotto")
 
 
 % trovo spessore strato limite
@@ -44,7 +46,7 @@ tetaDue = trapz(altezze(1:indiciMaggiori), valori(1:indiciMaggiori)./uInf.*(1-va
 
 % non posso calcolare tau wall perché non ho altezza = 0
 
-uTauGuess =3;
+uTauGuess = 3.2422;
 k = 0.4;
 c = 5.2;
 viscositaCinematica = 1.5*10^-6; % ni
