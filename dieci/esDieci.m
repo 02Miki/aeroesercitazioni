@@ -8,9 +8,8 @@ close all
 matrice = readmatrix("vupplane1.csv");
 altezze = matrice(:, 1);
 valori = matrice(:, 2);
-% [, valori] = [, matrice(:, 2)]
 subplot(2, 1, 1)
-
+title("Strato limite condotto")
 plot(valori, altezze)
 
 indiciMaggiori = find(altezze>-0.02);
@@ -19,6 +18,7 @@ ylabel("Altezza")
 
 subplot(2, 1, 2)
 hold on
+title("Confronto strato limite parte alta e bassa")
 plot(valori(indiciMaggiori:end), altezze(indiciMaggiori:end))
 plot(valori(1:indiciMaggiori), abs(altezze(1:indiciMaggiori))-0.04)
 xlabel("Velocità")
