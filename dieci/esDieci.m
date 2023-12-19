@@ -50,9 +50,25 @@ uTauGuess = 3.2422;
 k = 0.4;
 c = 5.2;
 viscositaCinematica = 1.5*10^-6; % ni
-yPlus = altezzeAbs*uTauGuess/viscositaCinematica;
-uPlus = (1/k*log(yPlus) + c).*(yPlus > 10) + yPlus.*(yPlus < 5);
-uCalcolata = @(uTauGuess) uPlus * uTauGuess;
-funzioneCosto = @(tau) sum(abs(uCalcolata(tau) - valori));
-uTau = lsqnonlin(funzioneCosto, uTauGuess)
+yPlusFun = @(altezze) altezze*uTauGuess/viscositaCinematica;
+yPlus = yPlusFun(altezzeAbs);
+% devo dividere strato limite?
+% 1) no, perché tutto influenza utau
+% 2) si, a metà, ma perché tutto non influenza?
+yPlusMeta = yPlusFun(0.02);
+yPlusMax = yPlusFun(0.04);
+
+uPlusFun = @(uTau, yPlus) (1/k*log(yPlus) + c).*(yPlus > 10 & yPlus < uTau*0.04/viscositaCinematica) + yPlus.*(yPlus < 5);
+uCalcolata = @(uTauGuess, uPlus) uPlus * uTauGuess;
+funzioneCosto = @(uTau, uPlus, valori) sum(abs(uCalcolata(uTau, uPlus) - valori));
+
+indiciInferiori = find(yPlus <= yPlusMeta);
+indiciSuperiori = find(yPlus >= yPlusMeta);
+uPlusSotto = @(uTau) uPlusFun(uTau, yPlus(indiciInferiori));
+uPlusSopra = @(uTau) uPlusFun(uTau, abs(yPlus(indiciSuperiori) - yPlusMax));
+uTauSopra = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusSopra(uTau), valori(indiciSuperiori)), uTauGuess)
+uTauSotto = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusSotto(uTau), valori(indiciInferiori)), uTauGuess)
+
+
+uTauTot = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusFun(uTau, yPlus), valori), uTauGuess)
 
