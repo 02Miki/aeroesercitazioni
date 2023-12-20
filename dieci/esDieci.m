@@ -73,3 +73,50 @@ uTauSotto = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusSotto(uTau), valori(indic
 
 uTauTot = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusFun(uTau, yPlus), valori), uTauGuess)
 
+
+%% parte due
+
+% fluttuazioni velocita
+matriceAltezze1 = readmatrix("altezza_canale_1.txt");
+nsperg = length(matriceAltezze1);
+close all
+% ci manca il tempo (la frequenza di acquisizione) 
+% ottengo fase e altezza di ogni curva, descritta come seno e coseno
+% la fase è di quanto è sfasata rispetto a quella originale
+% fft fa somma di sin, e associa ampiezza a ogni seno. Ci serve ampiezza
+% trova coefficienti e sfasamento del segnale. Valore abs è ampiezza, arctg
+% è la fase, e per avere energia faccio ^2
+fourier1 = fft(matriceAltezze1, nsperg);
+fACQ = 25600; %hz
+ampiezza1 = abs(fourier1);
+energia1 = ampiezza1.^2;
+
+f1 = linspace(0, fACQ, nsperg);
+% loglog(f1, ampiezza)
+figure
+loglog(f1, energia1)
+
+
+% Più alto del primo
+matriceAltezze2 = readmatrix("altezza_canale_2.txt");
+nsperg = length(matriceAltezze2);
+
+fourier2 = fft(matriceAltezze2, nsperg);
+ampiezza2 = abs(fourier2);
+energia2 = ampiezza2.^2;
+
+f2 = linspace(0, fACQ, nsperg);
+hold on
+loglog(f2, energia2)
+
+legend("Primo", "Secondo")
+% PARTE PIATTA ALLA FINE è RUMORE, LA NOSTRA FUNZIONE VORREBBE CONTINUARE A SCENDERE
+xlabel("Frequenze")
+ylabel("Energie")
+
+
+% DECADONO ALLO STESSO MODO, [] è universale, grazie a questo possiamo
+% creare dei modelli
+
+
+
