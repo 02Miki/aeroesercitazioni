@@ -29,6 +29,7 @@ end
 
 tauWall = 0.332 * viscositaCinematica*densita * uInf * sqrt(uInf/(viscositaCinematica*xCritico))
 cf = tauWall/(1/2*densita*uInf^2)*2
+
 D = cf*1/2*densita*uInf^2
 
 % portata al dt = rho*u*dA  = rho * u * 1 * dy

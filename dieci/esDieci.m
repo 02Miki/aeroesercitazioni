@@ -47,7 +47,7 @@ tetaDue = trapz(altezze(1:indiciMaggiori), valori(1:indiciMaggiori)./uInf.*(1-va
 % non posso calcolare tau wall perché non ho altezza = 0
 % random guess, metto valore a caso e poi avvicino a mano per trovare valore preciso
 uTauGuess = 3.2422;
-k = 0.4;
+k = 0.41;
 c = 5.2;
 viscositaCinematica = 1.5*10^-6; % ni
 % !! Yplus al momento non cambia al variare di uTauGuess !! (da correggere)
@@ -63,15 +63,17 @@ uPlusFun = @(uTau, yPlus) (1/k*log(yPlus) + c).*(yPlus > 10 & yPlus < uTau*0.04/
 uCalcolata = @(uTauGuess, uPlus) uPlus * uTauGuess;
 funzioneCosto = @(uTau, uPlus, valori) sum(abs(uCalcolata(uTau, uPlus) - valori));
 
-indiciInferiori = find(yPlus <= yPlusMeta);
-indiciSuperiori = find(yPlus >= yPlusMeta);
+% impongo y/delta <= 1
+indiciInferiori = find(altezzeAbs <= deltaUno);
+indiciSuperiori = find(altezzeAbs >= 0.04-deltaDue);
+
 uPlusSotto = @(uTau) uPlusFun(uTau, yPlus(indiciInferiori));
 uPlusSopra = @(uTau) uPlusFun(uTau, abs(yPlus(indiciSuperiori) - yPlusMax));
 uTauSopra = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusSopra(uTau), valori(indiciSuperiori)), uTauGuess)
 uTauSotto = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusSotto(uTau), valori(indiciInferiori)), uTauGuess)
 
 
-uTauTot = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusFun(uTau, yPlus), valori), uTauGuess)
+% uTauTot = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusFun(uTau, yPlus), valori), uTauGuess)
 
 
 %% parte due
