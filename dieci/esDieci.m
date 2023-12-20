@@ -55,7 +55,7 @@ yPlusFun = @(altezze) altezze*uTauGuess/viscositaCinematica;
 yPlus = yPlusFun(altezzeAbs);
 % devo dividere strato limite?
 % 1) no, perché tutto influenza utau
-% 2) si, a metà, ma perché tutto non influenza?
+% 2) si, a metà, ma perché tutto non influenza? NON A META
 yPlusMeta = yPlusFun(0.02);
 yPlusMax = yPlusFun(0.04);
 
