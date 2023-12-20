@@ -50,6 +50,7 @@ uTauGuess = 3.2422;
 k = 0.4;
 c = 5.2;
 viscositaCinematica = 1.5*10^-6; % ni
+% !! Yplus al momento non cambia al variare di uTauGuess !! (da correggere)
 yPlusFun = @(altezze) altezze*uTauGuess/viscositaCinematica;
 yPlus = yPlusFun(altezzeAbs);
 % devo dividere strato limite?
