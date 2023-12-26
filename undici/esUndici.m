@@ -27,18 +27,21 @@ else
     disp("TUTTO LAMINARE")
 end
 
-tauWall = 0.332 * viscositaCinematica*densita * uInf * sqrt(uInf/(viscositaCinematica*xCritico))
-cf = tauWall/(1/2*densita*uInf^2)*2
+xSpace = linspace(0, xCritico);
+tauWall = @(x) 0.332 * viscositaCinematica*densita * uInf * sqrt(uInf./(viscositaCinematica.*x));
+tauWallCritico = 0.332 * viscositaCinematica*densita * uInf * sqrt(uInf/(viscositaCinematica*xCritico))
 
-D = cf*1/2*densita*uInf^2
+cf = integral(@(x) tauWall(x)./(1/2*densita*uInf^2)*2, 0, xCritico)
+
+D = cf*1/2*densita*uInf^2*2
 
 % portata al dt = rho*u*dA  = rho * u * 1 * dy
 
 
-reX = @(x) uInf*x/viscositaCinematica;
+% reX = @(x) uInf*x/viscositaCinematica;
 
 
-spessoreStratoLimite = 5 * xCritico/sqrt(rexIntegro)
+% spessoreStratoLimite = 5 * xCritico/sqrt(rexIntegro)
 
 
 
