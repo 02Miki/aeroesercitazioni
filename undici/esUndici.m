@@ -74,8 +74,55 @@ clc
 clear
 close all
 
+eta = linspace(0, 6, 500)
+u_UInf = sin(pi/2.*eta).*(eta <= 1) + 1.*(eta > 1)
+
+
+deltaStar = trapz(eta, 1-u_UInf);
+teta = trapz(eta, u_UInf.*(1-u_UInf));
+H = deltaStar/teta
+
+delta = sqrt(pi/teta)
+
+deltaStarVero = deltaStar * delta
+tetaVero = delta*teta
+cf = sqrt(pi*teta)
 
 % deltaStar = 1 - u/Uinf
 
+plot(u_UInf, eta, LineWidth=1.5)
 
+
+
+%% es 4
+clc
+clear
+
+eta = linspace(0, 6, 500)
+u_UInf = erf(eta)
+
+deltaStar = trapz(eta, 1-u_UInf);
+teta = trapz(eta, u_UInf.*(1-u_UInf));
+H = deltaStar/teta
+
+
+hold on
+plot(u_UInf, eta, LineWidth=1.5)
+
+
+%% blasius
+
+viscositaCinematica = 1.5*10^-6; % ni
+y = 1000;
+f0 = [0,0,1]; 
+
+maxEta = 6;
+etaSpan = [0, maxEta];
+
+[eta, f, fPrimo, fSecondo] = bvpSolveBlasius(etaSpan, f0);
+
+
+plot(fPrimo, eta, LineWidth=1.5)
+
+legend("Sinuisoidale", "Funzione Errori", "Blasius")
 
