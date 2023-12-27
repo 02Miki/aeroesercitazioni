@@ -123,6 +123,7 @@ etaSpan = [0, maxEta];
 
 
 plot(fPrimo, eta, LineWidth=1.5)
-
+xlabel("U/U Inf")
+ylabel("eta")
 legend("Sinuisoidale", "Funzione Errori", "Blasius")
 
