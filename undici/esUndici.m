@@ -98,12 +98,12 @@ plot(u_UInf, eta, LineWidth=1.5)
 clc
 clear
 
-eta = linspace(0, 6, 500)
-u_UInf = erf(eta)
+eta = linspace(0, 6, 500);
+u_UInf = erf(eta);
 
 deltaStar = trapz(eta, 1-u_UInf);
 teta = trapz(eta, u_UInf.*(1-u_UInf));
-H = deltaStar/teta
+H = deltaStar/teta;
 
 
 hold on
