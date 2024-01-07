@@ -56,7 +56,7 @@ y = raggio.*sin(teta);
 phi = l*circ.*sin(atan2(Y,X))./(2*pi.*sqrt(X.^2+Y.^2));
 hold on
 
-contour(X, Y, phi, 200)
+contour(X, Y, phi, 200, "-r")
 
 psi = (5.*(Y.^2./X.^2 + 1).^(1/2))./((X.^2 + Y.^2).^(1/2).*(2*pi + (2*pi.*Y.^2)./X.^2));
 contour(X, Y, psi, 200)
@@ -80,6 +80,7 @@ y = r.*sin(teta);
 [X,Y] = meshgrid(x,y);
 
 psi = (u.*(a^2./(sqrt(X.^2+Y.^2).^2)-1).*Y - circ./(2*pi).*log(sqrt(X.^2+Y.^2)./a)).*(sqrt(X.^2+Y.^2)>=a);
+phi = - X - atan(X./Y) - X./(X.^2 + Y.^2);
 
 l = contour(X,Y, psi, 31, "-b", 'LineWidth',1);
 
@@ -91,6 +92,7 @@ axis equal
 
 
 
+
 syms tetaAngolo
 vTeta = @(tetaAngolo) (2.*sin(tetaAngolo))/a.^2 - sin(tetaAngolo)*(1./a.^2 - 1) + 1./a;
 valori = solve(vTeta, tetaAngolo)
@@ -99,7 +101,8 @@ for valore = valori
     plot(cos(valore), sin(valore), "or", 'MarkerFaceColor', 'r', LineWidth=2)
 end
 
-
+figure
+contour(X,Y, phi, 31, "-b", 'LineWidth',1);
 % plot(cos(valori(2)), sin(valori(2)), "or", LineWidth=2)
 
 cp = 1-(vTeta(teta)./u).^2
@@ -122,24 +125,27 @@ cd = trapz(teta, -cp.*cos(teta))
 %% derivate
 clc
 clear
-syms Y X
+syms Y X 
 
 teta = linspace(0, 2*pi);
 raggio = linspace(0, 2);
 q = -2;
 circ = 3;
+a = 1;
+u = 1;
+circ = 1/2 * 4*pi*a*u;
 % x = raggio.*cos(teta);
 
 % psi= (-2*atan(y/x))/(2*pi) + (-3/(2*pi))*log(sqrt(x^2+y^2));
 % u=diff(psi,y)
 % v=-diff(psi,x)
 
-% psi = -2*atan(y/x)/(2*pi) + (-3/(2*pi))*log(sqrt(x.^2+y.^2))
-% 
-% u = diff(psi, y)
-% v = diff(-psi, x)
-% 
-% phi = int(u, x)
+psi = (u.*(a^2./(sqrt(X.^2+Y.^2).^2)-1).*Y - circ./(2*pi).*log(sqrt(X.^2+Y.^2)./a))
+
+ub = diff(psi, Y)
+v = diff(-psi, X)
+
+phi = int(ub, X)
 
 % l = 0.001;
 % circ = 5000;

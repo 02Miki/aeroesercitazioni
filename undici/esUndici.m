@@ -108,6 +108,7 @@ H = deltaStar/teta;
 
 hold on
 plot(u_UInf, eta, LineWidth=1.5)
+%CALCOLA DELTA
 
 
 %% blasius
