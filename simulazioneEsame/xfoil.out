@@ -1,0 +1,181 @@
+
+ ===================================================
+  XFOIL Version 6.99
+  Copyright (C) 2000   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+  Caveat computor
+ ===================================================
+
+ File  xfoil.def  not found
+
+   QUIT    Exit program
+
+  .OPER    Direct operating point(s)
+  .MDES    Complex mapping design routine
+  .QDES    Surface speed design routine
+  .GDES    Geometry design routine
+
+   SAVE f  Write airfoil to labeled coordinate file
+   PSAV f  Write airfoil to plain coordinate file
+   ISAV f  Write airfoil to ISES coordinate file
+   MSAV f  Write airfoil to MSES coordinate file
+   REVE    Reverse written-airfoil node ordering
+
+   LOAD f  Read buffer airfoil from coordinate file
+   NACA i  Set NACA 4,5-digit airfoil and buffer airfoil
+   INTE    Set buffer airfoil by interpolating two airfoils
+   NORM    Buffer airfoil normalization toggle
+   XYCM rr Change CM reference location, currently  0.25000 0.00000
+
+   BEND    Display structural properties of current airfoil
+
+   PCOP    Set current-airfoil panel nodes directly from buffer airfoil points
+   PANE    Set current-airfoil panel nodes ( 160 ) based on curvature
+  .PPAR    Show/change paneling
+
+  .PLOP    Plotting options
+
+   WDEF f  Write  current-settings file
+   RDEF f  Reread current-settings file
+   NAME s  Specify new airfoil name
+   NINC    Increment name version number
+
+   Z       Zoom    | (available in all menus)
+   U       Unzoom  | 
+
+ XFOIL   c>   Max thickness =     0.150043  at x =   0.300
+ Max camber    =     0.040000  at x =   0.202
+
+ Buffer airfoil set using 331 points
+
+ Blunt trailing edge.  Gap =  0.00315
+
+ Paneling parameters used...
+   Number of panel nodes       160
+   Panel bunching parameter    1.000
+   TE/LE panel density ratio   0.150
+   Refined-area/LE panel density ratio    0.200
+   Top    side refined area x/c limits  1.000 1.000
+   Bottom side refined area x/c limits  1.000 1.000
+
+ XFOIL   c>  
+ XFOIL   c>  
+ XFOIL   c>  
+.OPERi   c>  
+.OPERi   c>  
+ Sonic Cp =    -16.31      Sonic Q/Qinf =     4.583
+
+
+.OPERi   c>  
+ M  =    0.2000
+ Re =   1000000
+
+.OPERv   c>  
+ Polar  1 newly created for accumulation
+ Airfoil archived with polar: NACA 4215                                       
+
+Enter  polar save filename  OR  <return> for no file   s>  
+ Polar save file will NOT be written
+
+Enter  polar dump filename  OR  <return> for no file   s>  
+ Polar dump file will NOT be written
+
+ Polar accumulation enabled
+
+.OPERva   c>   Calculating unit vorticity distributions ...
+ Calculating wake trajectory ...
+ Calculating source influence matrix ...
+
+ Solving BL system ...
+
+ Initializing BL ...
+    side            1  ...
+ MRCHUE: Inverse mode at  52     Hk =   2.500
+ MRCHUE: Inverse mode at  76     Hk =   2.500
+    side            2  ...
+ MRCHUE: Inverse mode at  23     Hk =   4.779
+ MRCHUE: Inverse mode at  24     Hk =   5.905
+ MRCHUE: Inverse mode at  25     Hk =   7.031
+ MRCHUE: Inverse mode at  26     Hk =   8.180
+ MRCHUE: Inverse mode at  27     Hk =   9.374
+ MRCHUE: Inverse mode at  28     Hk =   5.674
+ MRCHUE: Inverse mode at  29     Hk =   2.500
+ MRCHUE: Inverse mode at  86     Hk =   2.500
+
+ Side 1  free  transition at x/c =  0.5919   52
+ Side 2  free  transition at x/c =  0.0382   28
+
+   1   rms: 0.1738E+00   max: -.2479E+01   C at   52  1   RLX: 0.202
+       a = -3.691      CL = -0.0057
+      Cm = -0.0714     CD =  0.00753   =>   CDf =  0.00651    CDp =  0.00102
+
+ Side 1  free  transition at x/c =  0.5965   52
+ Side 2  free  transition at x/c =  0.0383   28
+
+   2   rms: 0.1148E+00   max: -.7674E+00   C at   52  1   RLX: 0.652
+       a = -3.691      CL = -0.0037
+      Cm = -0.0691     CD =  0.00910   =>   CDf =  0.00653    CDp =  0.00257
+
+ Side 1  free  transition at x/c =  0.6228   54
+ Side 2  free  transition at x/c =  0.0387   28
+
+   3   rms: 0.4682E-01   max: -.3947E+00   C at   54  1
+       a = -3.691      CL =  0.0109
+      Cm = -0.0709     CD =  0.00993   =>   CDf =  0.00653    CDp =  0.00340
+
+ Side 1  free  transition at x/c =  0.6325   55
+ Side 2  free  transition at x/c =  0.0393   27
+
+   4   rms: 0.7405E-02   max: -.8060E-01   C at   55  1
+       a = -3.691      CL =  0.0137
+      Cm = -0.0715     CD =  0.00997   =>   CDf =  0.00643    CDp =  0.00355
+
+ Side 1  free  transition at x/c =  0.6341   55
+ Side 2  free  transition at x/c =  0.0394   27
+
+   5   rms: 0.3789E-03   max: -.3770E-02   D at   85  2
+       a = -3.691      CL =  0.0138
+      Cm = -0.0715     CD =  0.00998   =>   CDf =  0.00642    CDp =  0.00356
+
+ Side 1  free  transition at x/c =  0.6340   55
+ Side 2  free  transition at x/c =  0.0394   27
+
+   6   rms: 0.1747E-05   max: -.1854E-04   C at   55  1
+       a = -3.691      CL =  0.0138
+      Cm = -0.0715     CD =  0.00998   =>   CDf =  0.00642    CDp =  0.00356
+ plradd ia,ip,cpol            1          76  7.91060645E-03
+
+ Point added to stored polar  1
+ Save file unspecified or not available
+ Dump file unspecified or not available
+
+.OPERva   c>  
+.OPERva   c>  
+.OPERva   c>  
+        airfoil                    Re           Mach       Ncrit  XtripT  XtripB     file
+       ------------------------  ------------  ----------  -----  ------  ------    -------------------
+ >  1  NACA 4215                 1.000e6       0.200        9.00   1.000   1.000    
+
+Enter polar output filename   s>  
+.OPERva   c>  
+ ==============================================================
+ Polar  1
+  
+       XFOIL         Version 6.99
+  
+ Calculated polar for: NACA 4215                                       
+  
+ 1 1 Reynolds number fixed          Mach number fixed         
+  
+ xtrf =   1.000 (top)        1.000 (bottom)  
+ Mach =   0.200     Re =     1.000 e 6     Ncrit =   9.000
+  
+   alpha    CL        CD       CDp       CM     Top_Xtr  Bot_Xtr
+  ------ -------- --------- --------- -------- -------- --------
+  -3.691   0.0138   0.00998   0.00356  -0.0715   0.6340   0.0394
+
+.OPERva   c>  
+ XFOIL   c>  

@@ -1,0 +1,18 @@
+naca 4215
+
+
+oper
+re 1e+06
+mach 0.2
+visc
+pacc
+
+
+alfa -3.6909
+dump xfoil_a-3.691_dump.dat
+cpwr xfoil_a-3.691_cpwr.dat
+pwrt
+xfoil_pwrt.dat
+plis
+
+quit
