@@ -76,6 +76,11 @@ legend([sperimentali, teorici], "Dati Sperimentali", "Dati Teorici")
 xlabel("y+")
 ylabel("u+")
 
+figure
+semilogx(yPlusDati, dati(:, 3), "o")
+
+xlabel("y+")
+ylabel("U rms")
 
 
 
