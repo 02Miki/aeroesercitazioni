@@ -49,6 +49,7 @@ plot(dati(:, 2), dati(:, 1))
 title("Strato Limite")
 xlabel("Velocità")
 ylabel("Altezza")
+grid on
 
 
 uTauGuess = 0.5411;
@@ -69,14 +70,20 @@ figure
 sperimentali = semilogx(yPlusDati, dati(:, 2)/uTau, "o");
 hold on
 yPlus = linspace(0, yPlusDati(1));
-teorici = semilogx(yPlusDati, uPlusFun(uTau, yPlusDati), "--k");
-semilogx(yPlus, yPlus, "--k")
+yPlusGrafico = [yPlusDati; yPlusDati(end)*5];
+uPlusCalcolata = uPlusFun(uTau, yPlusGrafico);
 
-legend([sperimentali, teorici], "Dati Sperimentali", "Dati Teorici")
+teorici = semilogx(yPlusGrafico, uPlusCalcolata, "--k");
+semilogx(yPlus, yPlus, "--k")
+grid on
+
+legenda = legend([sperimentali, teorici], "Dati Sperimentali", "Dati Teorici");
+legenda.Location = "northwest";
 xlabel("y+")
 ylabel("u+")
-
+xlim([0, yPlusDati(end)*2])
 figure
+
 semilogx(yPlusDati, dati(:, 3), "o")
 
 xlabel("y+")
@@ -85,5 +92,5 @@ ylabel("U rms")
 
 
 
-
+grid on
 
