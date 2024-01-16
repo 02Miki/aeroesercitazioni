@@ -108,8 +108,14 @@ H = deltaStar/teta;
 
 hold on
 plot(u_UInf, eta, LineWidth=1.5)
-%CALCOLA DELTA
 
+% Calcolo delta
+step = 0.0001;
+spazio = 0:step:0.5;
+% calcolo la derivata con matlab
+derivataU = diff(erf(spazio))/step;
+
+delta = sqrt(derivataU(1)*2/teta)
 
 %% blasius
 
