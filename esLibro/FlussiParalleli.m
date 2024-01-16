@@ -1,4 +1,4 @@
-%% 3 -- SBAGLIATO, VELOCITA è SBAGLIATA DI 3 ORDINI DI GRANDEZZA, MA IL NUMERO GIUSTO
+%% 3 
 clc
 clear
 close all
@@ -14,7 +14,7 @@ viscositaDinamica = viscositaCinematica * densita;
 % portata = densita*velocita*area
 
 velocitaMax = viscositaCinematica/diametro * reCritico%* 10^-3 per qualche motivo ordine di grandezza è sbagliato
-portata = velocitaMax*densita*pi*(diametro/2)^2
+portata = velocitaMax*pi*(diametro/2)^2
 
 % portata = -pi/8 * R^4/mu * dp/dx
 dp_dx = -portata * viscositaDinamica/(diametro/2)^4 * 8/pi
