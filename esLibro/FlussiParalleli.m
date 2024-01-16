@@ -13,7 +13,7 @@ viscositaDinamica = viscositaCinematica * densita;
 
 % portata = densita*velocita*area
 
-velocitaMax = viscositaCinematica/diametro * reCritico%* 10^-3 per qualche motivo ordine di grandezza è sbagliato
+velocitaMax = viscositaCinematica/diametro * reCritico
 portata = velocitaMax*pi*(diametro/2)^2
 
 % portata = -pi/8 * R^4/mu * dp/dx
