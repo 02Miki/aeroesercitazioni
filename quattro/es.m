@@ -173,6 +173,14 @@ legend("KJ", "XFoil")
 set(gca, 'ydir', 'reverse')
 
 
+% grafico velocità
+figure
+hold on
+plot(-real(zita) + real(zita(1)), imag(zita))
+
+tetaSpace = linspace(0, 2*pi, 160);
+plot(-real(zita) + real(zita(1)), vStar)
+
 
 
 
