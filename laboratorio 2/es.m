@@ -94,8 +94,10 @@ tauWall = uTau^2 * densita;
 cf = tauWall/(1/2*densita*uInf^2)
 grid on
 
-drag = trapz(linspace(0, 1), ones(1, 100) * tauWall)
-cd = drag/(1/2*densita*uInf^2)
+% SBAGLIATI
+%drag = trapz(linspace(0, 1), ones(1, 100) * tauWall)
+%cd = drag/(1/2*densita*uInf^2)
+% GIUSTI
 dragAltroMetodo = densita*uInf^2*tetaTrapz
 cdAltroMetodo = dragAltroMetodo/(1/2*densita*uInf^2)
 
