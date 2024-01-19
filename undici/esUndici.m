@@ -53,14 +53,19 @@ end
 tauWall = @(x) 0.332 * viscositaCinematica*densita * uInf * sqrt(uInf./(viscositaCinematica.*x));
 tauWallCritico = tauWall(xCritico)
 
+reX = @(x) uInf*x./viscositaCinematica;
+spessoreStratoLimite = @(x) 5 * x./sqrt(reX(x));
+spessoreMassimo = spessoreStratoLimite(xCritico);
+
+tauAltroMetodo = viscositaCinematica*densita*2/spessoreMassimo*uInf
+
+
 cf = integral(@(x) tauWall(x)./(1/2*densita*uInf^2), 0, xCritico)
 
 D = cf*1/2*densita*uInf^2*2*profondita
 DAltroMetodo = 2*0.664*profondita*sqrt(densita^2*viscositaCinematica*xCritico*uInf^3)
-
-reX = @(x) uInf*x./viscositaCinematica;
-spessoreStratoLimite = @(x) 5 * x./sqrt(reX(x));
-spessoreMassimo = spessoreStratoLimite(xCritico);
+cd = 1.328/sqrt(reX(xCritico))
+DAltroMetodoTurna = 1/2*densita*uInf^2*xCritico*profondita*cd*2
 
 eta = @(y) y ./ spessoreMassimo;
 velocita = @(y) uInf .* ((2.*eta(y) - eta(y).^2).*(y <= spessoreMassimo));
