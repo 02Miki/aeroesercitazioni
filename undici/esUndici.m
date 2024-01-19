@@ -67,6 +67,9 @@ velocita = @(y) uInf .* ((2.*eta(y) - eta(y).^2).*(y <= spessoreMassimo));
 
 portata = integral(@(y) densita.*velocita(y), 0, spessoreMassimo)
 
+deltaStar = integral(@(eta) 1-(2.*eta-eta.^2), 0, 1)
+teta = integral(@(eta) (2.*eta-eta.^2).*(1-(2.*eta-eta.^2)), 0, 1)
+
 
 
 %% es 3
