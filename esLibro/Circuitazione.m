@@ -1,3 +1,15 @@
+%% 2
+clc
+clear
+close all
+
+a = 0.5;
+vInf = 40;
+v_0_a = 95;
+syms circ
+solve(@(circ) 2*vInf*sin(pi/2) + circ/(2*pi*a) == v_0_a, circ)
+
+
 
 %% es 3
 
