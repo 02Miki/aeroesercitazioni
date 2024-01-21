@@ -3,10 +3,10 @@ clc
 clear
 close all
 lambda = 9.2;
-% NACA = '4215';
-cl = 0.52;
+NACA = '4215';
+cl = 0;
 % 
-% alfaGuess = 10;
+% alfa zero qua viene -3.7879
 % minimoAlfa = -50;
 % minimaDifferenza = 50;
 % for alfa=linspace(-5, 5)
@@ -20,7 +20,7 @@ cl = 0.52;
 %         disp("Errore a " + alfa)
 %     end
 % end
-% 
+
 
 
 

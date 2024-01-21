@@ -8,9 +8,9 @@ visc
 pacc
 
 
-alfa -3.6909
-dump xfoil_a-3.691_dump.dat
-cpwr xfoil_a-3.691_cpwr.dat
+alfa 2.77778
+dump xfoil_a02.778_dump.dat
+cpwr xfoil_a02.778_cpwr.dat
 pwrt
 xfoil_pwrt.dat
 plis
