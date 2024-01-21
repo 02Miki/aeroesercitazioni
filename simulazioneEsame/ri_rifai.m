@@ -6,8 +6,11 @@ close all
 allungamento = 9.2;
 naca = 4215;
 cl = 0.52;
+% preso da xfoil
 alfa0 = deg2rad(-3.6909)
 
+% presi da xfoil, dati angoli a caso, per calcolare clPrimo (coefficiente
+% angolare cl/alfa senza incidenza indotta
 clAlfa_0 = 0.4574;
 clAlfa_5 = 1.0735;
 
