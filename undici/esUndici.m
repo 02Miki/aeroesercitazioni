@@ -122,7 +122,7 @@ step = 0.0001;
 spazio = 0:step:0.5;
 % calcolo la derivata con matlab
 derivataU = diff(erf(spazio))/step;
-
+% prendo il primo elemento della derivata, perché siamo a muro
 delta = sqrt(derivataU(1)*2/teta)
 
 %% blasius
