@@ -39,5 +39,6 @@ clc
 clear
 close all
 
+% VEDI ES LIBRO, EQ BILANCIO, ULTIMO ESERCIZIO
 
 
