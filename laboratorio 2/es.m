@@ -102,6 +102,19 @@ dragAltroMetodo = densita*uInf^2*tetaTrapz
 cdAltroMetodo = dragAltroMetodo/(1/2*densita*uInf^2)
 
 
+nsperg = length(dati(:, 3));
 
 
+fourier1 = fft(dati(:, 3), nsperg);
+fACQ = 25600; %hz
+ampiezza1 = abs(fourier1);
+energia1 = ampiezza1.^2;
+
+f1 = linspace(0, fACQ, nsperg);
+% loglog(f1, ampiezza)
+figure
+loglog(f1, energia1)
+xlabel("Frequenze")
+ylabel("Energie")
+grid on
 
