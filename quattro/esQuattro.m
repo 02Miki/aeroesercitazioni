@@ -198,10 +198,12 @@ plot([xAla; xAla(1)], abs(vInf*foil.UeVinf(1:length(foil.cp)+1)))
 
 title("Confronto Velocità KJ e XFoil")
 legend("KJ", "XFoil")
+ylabel("Velocità")
+xlabel("Corda Alare")
 grid on
 xlim([-0.2, 1.2])
-angoloAttacco = 10;
 
+angoloAttacco = 10;
 [cp, zita, corda, vStar] = kj(pol.Re, 1.6, [0.1, 0.16], angoloAttacco);
 
 % Originariamente, le coordinate del profilo partono dal bordo d'attacco, e
@@ -217,6 +219,7 @@ massimoCorda = find(max(cordinateX) == cordinateX);
 figure
 hold on
 plot(cordinateX, cordinateY)
+title("Profilo Generico di Kutta-Jukowski")
 
 % Trasposta perché flipud inverte le righe, ma noi abbiamo 1 riga e
 % tot colonne, e xfoil vuole le cose in colonna
@@ -236,6 +239,10 @@ hold on
 plot(cordinateX, cp)
 plot(xAla, foil.cp)
 legend("KJ", "XFoil")
+title("Confronto CP KJ e XFoil")
+ylabel("Cp")
+xlabel("Corda Alare")
+
 grid on
 xlim([-0.2, 1.2])
 set(gca, 'ydir', 'reverse')
