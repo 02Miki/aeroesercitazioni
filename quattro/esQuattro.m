@@ -156,7 +156,7 @@ raggio_Dopo = (b_Dopo+xc)/cos(beta_Dopo);
 
 yc = sin(beta_Dopo)*raggio_Dopo;
 
-[cp, zita] = kj(pol.Re, raggio_Dopo, [xc, yc], 10);
+[cp, zita, corda, vStar] = kj(pol.Re, raggio_Dopo, [xc, yc], 10);
 
 
 subplot(2,1,1)
