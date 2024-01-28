@@ -4,7 +4,7 @@ function [cp, zita, corda, vStar] = kj(Reynolds, raggio, centroCerchio, alfaGrad
     % re = u*l*rho/mu;
     densitaAria = 1.225;
     % vel = 1;
-    vInf = Reynolds*viscositaDinamica/(densitaAria*raggio*2);
+    
     alfa = deg2rad(alfaGradi);
     
     
@@ -19,6 +19,7 @@ function [cp, zita, corda, vStar] = kj(Reynolds, raggio, centroCerchio, alfaGrad
     
     b = sqrt(raggio^2-centroCerchio(2)^2) - centroCerchio(1);
     corda = 4*b;
+    vInf = Reynolds*viscositaDinamica/(densitaAria/corda);
     zc = complex(centroCerchio(1), centroCerchio(2));
     
     % beta = acos((sqrt(raggio^2-centro(2)^2))/raggio);
