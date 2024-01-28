@@ -26,6 +26,7 @@ W = @(z) (-vInf * ((z-zc).*exp(1i*alfa) + raggio^2./(z-zc)*exp(-1i*alfa)) - 1i*c
 [X, Y] = meshgrid(x, y);
 Z = complex(X,Y);
 hold on
+% ~ ignora quell'elemento
 [~, isoPsi] = contour(X, Y, imag(W(Z)), 31);
 
 % punti arresto
