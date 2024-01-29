@@ -56,7 +56,7 @@ spazio = linspace(-14, 14);
 hold on
 sp = spline(incidenze, cl, spazio);
 subplot(1, 2, 2)
-plot(spazio, sp, LineWidth=2)
+p1 = plot(spazio, sp, LineWidth=2)
 hold on
 indiceAlfaTotali = 1:length(incidenze);
 viscositaDinamica = 1.8*10^-5;
@@ -70,7 +70,7 @@ for i = indiceSpazio
         [pol, foil] = xfoil('NACA0015', indice, Re, 0.2, "oper/iter 300");
         clXFoil(i) = pol.CL;
     catch excp
-        indiceErrore
+        indice
         clXFoil(i) = NaN;
     end
 
@@ -84,7 +84,8 @@ for i = find(isnan(clXFoil))
     clXFoil(i) = (clXFoil(i-1) + clXFoil(i+1))/2;
 end
 
-plot(spazioPlot, clXFoil, LineWidth=2)
+p2 = plot(spazioPlot, clXFoil, LineWidth=2)
+
 
 title("Grafico Cl-Alfa Spline")
 
@@ -92,7 +93,8 @@ grid on
 
 xlabel("alfa")
 ylabel("Cl")
-legend("Dati Sperimentali", "XFoil", "Location","northwest")
+plot(linspace(-20, 20), zeros(1, 100), "black", zeros(1, 100), linspace(-1.5, 1.5), "black")
+legend([p1, p2], "Dati Sperimentali", "XFoil", Location="northwest")
 
 lunghezzaCorda = 1;
 
