@@ -218,7 +218,9 @@ massimoCorda = find(max(cordinateX) == cordinateX);
 % plot(cordinateX(1:massimoCorda), cordinateY(1:massimoCorda))
 
 figure
+subplot(2,1,1)
 hold on
+
 plot(cordinateX, cordinateY)
 title("Profilo Generico di Kutta-Jukowski")
 
@@ -235,7 +237,8 @@ legend("KJ", "XFoil")
 axis equal
 grid on
 
-figure
+subplot(2,1,2)
+
 hold on
 plot(cordinateX, cp)
 plot(xAla, foil.cp)
