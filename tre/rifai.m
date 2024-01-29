@@ -101,8 +101,8 @@ for valore = valori
     plot(cos(valore), sin(valore), "or", 'MarkerFaceColor', 'r', LineWidth=2)
 end
 
-figure
-contour(X,Y, phi, 31, "-b", 'LineWidth',1);
+% figure
+% contour(X,Y, phi, 31, "-b", 'LineWidth',1);
 % plot(cos(valori(2)), sin(valori(2)), "or", LineWidth=2)
 
 cp = 1-(vTeta(teta)./u).^2
