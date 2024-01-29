@@ -214,8 +214,9 @@ cordinateX = (-real(zita) + max(real(zita)))/corda;
 cordinateY = imag(zita)/corda;
 massimoCorda = find(max(cordinateX) == cordinateX);
 
-% Usato per capire come 
+% Usato per capire come fare a ordinare le coordinate per xfoil
 % plot(cordinateX(1:massimoCorda), cordinateY(1:massimoCorda))
+
 figure
 hold on
 plot(cordinateX, cordinateY)
