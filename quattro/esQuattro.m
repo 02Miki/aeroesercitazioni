@@ -252,31 +252,6 @@ xlim([-0.2, 1.2])
 set(gca, 'ydir', 'reverse')
 
 
-
-
-
-%% esercizio 2 libro whatsapp
-
-clc
-clear
-close all
-
-clc
-clear
-close all
-
-raggio_Dopo = 0.5;
-vInf = 40;
-vTarget = 95;
-
-(vTarget - 2*vInf*sin(pi/2))*(2*pi*raggio_Dopo)/pi
-
-
-
-
-
-
-
 %%
 
 syms circ
