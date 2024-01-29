@@ -71,8 +71,8 @@ a = 1;
 u = 1;
 circ = 1/2 * 4*pi*a*u;
 
-r = linspace(0.01, 5);
-teta = linspace(0.00001, 2*pi-0.00001);
+r = linspace(0, 5);
+teta = linspace(0, 2*pi);
 
 x = r.*cos(teta);
 y = r.*sin(teta);
@@ -92,7 +92,7 @@ axis equal
 
 
 
-
+% trovo punti di arresto
 syms tetaAngolo
 vTeta = @(tetaAngolo) (2.*sin(tetaAngolo))/a.^2 - sin(tetaAngolo)*(1./a.^2 - 1) + 1./a;
 valori = solve(vTeta, tetaAngolo)
@@ -105,6 +105,7 @@ end
 % contour(X,Y, phi, 31, "-b", 'LineWidth',1);
 % plot(cos(valori(2)), sin(valori(2)), "or", LineWidth=2)
 
+% capitolo 3, slide 58
 cp = 1-(vTeta(teta)./u).^2
 
 figure
