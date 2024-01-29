@@ -7,6 +7,7 @@ allungamento = 9.2;
 naca = 4215;
 cl = 0.52;
 % preso da xfoil
+% angolo portanza nulla
 alfa0 = deg2rad(-3.6909)
 
 % presi da xfoil, dati angoli a caso, per calcolare clPrimo (coefficiente
@@ -26,12 +27,11 @@ angoloClGradi = rad2deg(angoloCl)
 alfaSpace = linspace(angoloCl - angoloCl/2, angoloCl + angoloCl/2);
 
 variazionePercentuale = clFun(alfaSpace(end), alfaSpace(end-1))/cl *100
-plot(linspace(-50, 50), (clFun(alfaSpace, alfa0)-cl)/cl*100)
+plot(linspace(-50, 50), (clFun(alfaSpace, angoloCl))/cl*100)
 
 grid on
 ylabel("Variazione % cl")
 xlabel("Variazione % alfa")
-
 
 %% 2
 
