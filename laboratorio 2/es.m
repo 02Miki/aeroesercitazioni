@@ -5,15 +5,15 @@ close all
 dati = readmatrix("risultati_hot_wire_20240110.xlsx");
 
 % cambio mm in metri
-dati(:, 1) = dati(:, 1) * 10^-3
+dati(:, 1) = dati(:, 1) * 10^-3;
 
 % devo calcolare delta, deltaStar, teta e H
 
 uInf = max(dati(:, 2))
 
-vStratoLimiteMatematica = 0.99*uInf
+vStratoLimiteMatematica = 0.99*uInf;
 
-indiciDentroStratoLimite = find(dati(:, 2) <= vStratoLimiteMatematica)
+indiciDentroStratoLimite = find(dati(:, 2) <= vStratoLimiteMatematica);
 indiceFinale = indiciDentroStratoLimite(end);
 delta = dati(indiceFinale, 1)
 
@@ -88,6 +88,7 @@ semilogx(yPlusDati, dati(:, 3), "o")
 
 xlabel("y+")
 ylabel("U rms")
+title("Fluttuazioni di velocità")
 
 tauWall = uTau^2 * densita;
 
@@ -113,6 +114,8 @@ energia1 = ampiezza1.^2;
 f1 = linspace(0, fACQ, nsperg);
 % loglog(f1, ampiezza)
 figure
+
+% quando il grafico si appiattisce è a causa di rumore di fondo
 loglog(f1, energia1)
 xlabel("Frequenze")
 ylabel("Energie")

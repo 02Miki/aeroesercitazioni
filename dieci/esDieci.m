@@ -59,7 +59,7 @@ yPlus = yPlusFun(altezzeAbs);
 yPlusMeta = yPlusFun(0.02);
 yPlusMax = yPlusFun(0.04);
 
-uPlusFun = @(uTau, yPlus) (1/k*log(yPlus) + c).*(yPlus > 10 & yPlus < uTau*0.04/viscositaCinematica) + yPlus.*(yPlus < 5);
+uPlusFun = @(uTau, yPlus) (1/k*log(yPlus) + c).*(yPlus > 10 & yPlus < uTau*0.04/viscositaCinematica) + yPlus.*(yPlus < 10);
 uCalcolata = @(uTauGuess, uPlus) uPlus * uTauGuess;
 funzioneCosto = @(uTau, uPlus, valori) sum(abs(uCalcolata(uTau, uPlus) - valori));
 
@@ -73,7 +73,51 @@ uTauSopra = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusSopra(uTau), valori(indic
 uTauSotto = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusSotto(uTau), valori(indiciInferiori)), uTauGuess)
 
 
+uPlusSperimentale = @(velocita, uTau) velocita/uTau;
+
+figure
+
+sperimentali = semilogx(yPlus(indiciInferiori), uPlusSperimentale(valori(indiciInferiori), uTauSotto), "o");
+hold on
+spazio = [linspace(yPlusFun(0), 9.9, 1000), linspace(10.1, yPlus(indiciInferiori(1)), 1000)];
+teorici = semilogx(spazio, uPlusFun(uTauSotto, spazio), "--k");
+title("Strato limite inferiore")
+xlabel("y+")
+ylabel("u+")
+legenda = legend([sperimentali, teorici], "Dati Sperimentali", "Dati Teorici");
+legenda.Location = "northwest";
+grid on
+
+figure
+
+
+sperimentali = semilogx(abs(yPlus(indiciSuperiori) - yPlusMax), uPlusSperimentale(valori(indiciSuperiori), uTauSopra), "o");
+hold on
+spazio = [linspace(yPlusFun(0), 9.9, 1000), linspace(10.1, abs(yPlus(indiciSuperiori(end)) - yPlusMax) , 1000)];
+teorici = semilogx(spazio, uPlusFun(uTauSopra, spazio), "--r");
+xlabel("y+")
+ylabel("u+")
+legenda = legend([sperimentali, teorici], "Dati Sperimentali", "Dati Teorici");
+legenda.Location = "northwest";
+% plot(abs(yPlus(indiciSuperiori) - yPlusMax), uPlusFun(uTauSopra, abs(yPlus(indiciSuperiori) - yPlusMax)), "--")
+
+title("Strato limite superiore")
+grid on
+
+
 % uTauTot = lsqnonlin(@(uTau) funzioneCosto(uTau, uPlusFun(uTau, yPlus), valori), uTauGuess)
+
+variazioniVelocita = readmatrix("fluctuation.txt");
+posizioni = readmatrix("fluctuation_point.txt");
+
+figure
+% Grafico molto approssimativo di u rms
+semilogx(abs(yPlusFun(posizioni(:, 2))), variazioniVelocita(1, 1:end-1), "o")
+xlabel("y+")
+ylabel("U rms")
+title("Fluttuazioni di velocità")
+grid on
+
 
 
 %% parte due
