@@ -84,17 +84,37 @@ end
 
 plot((2.*(yVal)./b), velFinali(1, 2:end-1) / (circ/pi*b), "k", LineWidth=1.5)
 
-%% 3
+%% 3 Guido
 
 clc
 clear
 close all
 
+%apertura alare
+b=5;
 
-k = 1
-l = @(y) lZero * sqrt(1-y.^2./b^2)
-circ = @(y) pi*l(y)
+%studiamo il problema riferendoci a metá apertura alare
+y=linspace(0,2.5);
+alfa_zero=-0.0683;
+alfa_indotto=0.0133;
+Cl=0.5;
+k=0.95;
+colore=["or","ob","ok","og"];
+i=1;
+for t=[0.25 0.5 0.75 1] %rastremazione
+    alfa=@(y) 2/pi*Cl*sqrt(1-(y.^2/(b/2)^2)).*(1/(k*pi))*(t+1)/2*1./(1+(t-1).*(y)./(b/2))+alfa_indotto+alfa_zero;
+    %trasformo alfa da radianti a gradi
+    alfa=rad2deg(alfa(y));
+hold on
+    grafici(i)=plot(y/(b/2),alfa,colore(i)); %gli angoli sono simmetrici perché la distribuzione di svergolamento é simmetrico dato che ala simmetrica
+    
+    plot(-y/(b/2),alfa,colore(i))
+   i=i+1;
+   
+end
 
+
+legend(grafici,"0.25","0.5","0.75","1")
 
 
 
