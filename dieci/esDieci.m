@@ -112,7 +112,14 @@ posizioni = readmatrix("fluctuation_point.txt");
 
 figure
 % Grafico molto approssimativo di u rms
-semilogx(abs(yPlusFun(posizioni(:, 2))), variazioniVelocita(1, 1:end-1), "o")
+semilogx(abs(yPlusFun(posizioni(:, 2))), variazioniVelocita(1, 1:end-1), "ok")
+
+% Tentativo spline, non utile
+% spazio = linspace(abs(yPlusFun(posizioni(1, 2))), abs(yPlusFun(posizioni(end, 2))), 1000);
+% sp = spline(abs(yPlusFun(posizioni(:, 2))), variazioniVelocita(1, 1:end-1), spazio)
+% hold on
+% semilogx(spazio, sp)
+
 xlabel("y+")
 ylabel("U rms")
 title("Fluttuazioni di velocità")
